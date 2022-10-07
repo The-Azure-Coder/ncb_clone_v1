@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'home_utilities.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -136,47 +136,9 @@ class _HomePageState extends State<HomePage> {
               )),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.only(
-            top: 15.0, left: 8.0, right: 8.0, bottom: 30.0),
-        child: ListView(children: [
-          Accordion(
-              title: "title",
-              child: Column(
-                children: [
-                  Container(
-                    width: screenSize.width,
-                    height: screenSize.height * .08,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                    ),
-                  )
-                ],
-              )),
-          Accordion(
-              title: "title",
-              child: Column(
-                children: [
-                  Container(
-                    color: Colors.red,
-                    width: 100.0,
-                    height: 100.0,
-                  )
-                ],
-              )),
-          Accordion(
-              title: "title",
-              child: Column(
-                children: [
-                  Container(
-                    color: Colors.red,
-                    width: 100.0,
-                    height: 100.0,
-                  )
-                ],
-              )),
-        ]),
-      ),
+      body: HomeContents(),
     );
   }
 }
+
+
