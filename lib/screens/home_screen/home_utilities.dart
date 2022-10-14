@@ -16,7 +16,7 @@ class Arch extends StatelessWidget {
               bottom: Radius.elliptical(50, 50), top: Radius.circular(10.0)),
         ),
         width: screenSize.width,
-        height: screenSize.height * 0.08,
+        height: screenSize.height * 0.07,
         child: child,
       ),
     );
@@ -37,8 +37,8 @@ class roundedContainer extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
           color: boxColor, borderRadius: BorderRadius.circular(10.0)),
-      width: screenSize.width * 0.31,
-      height: screenSize.height * 0.135,
+      width: screenSize.width * 0.30,
+      height: screenSize.height * 0.160,
       child: child,
     );
   }
@@ -96,6 +96,146 @@ class _AccordionState extends State<Accordion> {
               : Container()
         ],
       ),
+    );
+  }
+}
+
+
+// Widget for Accordion content
+class doubleBoxes extends StatelessWidget {
+  const doubleBoxes({
+    Key? key,
+    required this.screenSize,
+  }) : super(key: key);
+
+  final Size screenSize;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Container(
+          width: screenSize.width,
+          height: screenSize.height * .07,
+          decoration: BoxDecoration(
+              boxShadow: const [
+                BoxShadow(
+                    color: Colors.grey,
+                    blurRadius: 5,
+                    spreadRadius: 1,
+                    offset: Offset(4, 4)),
+              ],
+              borderRadius: BorderRadius.all(Radius.circular(10.0)),
+              color: Colors.white),
+          padding: EdgeInsets.all(8),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'New Debit Card?',
+                style: TextStyle(color: Colors.black, fontSize: 15),
+              ),
+              Directionality(
+                  textDirection: TextDirection.rtl,
+                  child: TextButton.icon(
+                    onPressed: () {},
+                    icon: Icon(
+                      Icons.chevron_left_outlined,
+                      color: Colors.black,
+                      size: 24,
+                    ),
+                    label: Text(
+                      'Activate it Here',
+                      style:
+                          TextStyle(color: Colors.black, fontSize: 15),
+                    ),
+                  ))
+            ],
+          ),
+        ),
+        Container(
+          width: screenSize.width,
+          // height: screenSize.height * .07,
+          margin: EdgeInsets.only(top: 20.0),
+          decoration: BoxDecoration(
+              boxShadow: const [
+                BoxShadow(
+                    color: Colors.grey,
+                    blurRadius: 5,
+                    spreadRadius: 1,
+                    offset: Offset(4, 4)),
+              ],
+              border:
+                  Border.all(color: Color.fromARGB(255, 180, 172, 172)),
+              borderRadius: BorderRadius.all(Radius.circular(10.0)),
+              color: Colors.white),
+          child: Padding(
+            padding: const EdgeInsets.all(15.0),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Savings',
+                      style: TextStyle(fontSize: 15),
+                    ),
+                    Text('Account Balance')
+                  ],
+                ),
+                Container(
+                  margin: EdgeInsets.only(top: 15.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        '....7742',
+                        style: TextStyle(
+                            fontSize: 17, fontWeight: FontWeight.w700),
+                      ),
+                      Text(
+                        'JMD 1314.14',
+                        style: TextStyle(
+                            fontSize: 17, fontWeight: FontWeight.w700),
+                      )
+                    ],
+                  ),
+                ),
+                const Divider(
+                  height: 20,
+                  thickness: 2,
+                  indent: 0,
+                  endIndent: 0,
+                  color: Colors.black,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    SizedBox(
+                      width: 100,
+                      height: 20,
+                    ),
+                    Directionality(
+                        textDirection: TextDirection.rtl,
+                        child: TextButton.icon(
+                          onPressed: () {},
+                          icon: Icon(
+                            Icons.arrow_back_outlined,
+                            size: 24,
+                          ),
+                          label: Text(
+                            'Account Details',
+                            style: TextStyle(fontSize: 15),
+                          ),
+                        ))
+                  ],
+                )
+              ],
+            ),
+          ),
+        )
+      ],
     );
   }
 }

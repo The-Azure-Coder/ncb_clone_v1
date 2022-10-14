@@ -18,7 +18,7 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: Colors.white,
       drawer: Drawer(),
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(310),
+        preferredSize: Size.fromHeight(screenSize.height * .42),
         child: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0.0,
@@ -39,23 +39,38 @@ class _HomePageState extends State<HomePage> {
             ),
           ],
           flexibleSpace: Container(
-            
-            height: screenSize.height * .4,
-            child: ClipRRect(
-              borderRadius:
-                  BorderRadius.vertical(bottom: Radius.elliptical(230.0, 55.0)),
-              child: Image.asset(
-                images.homeImage1,
-                fit: BoxFit.fill,
-              ),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                Colors.black,
+                Colors.black
+              ]),
+              borderRadius: BorderRadius.vertical(bottom: Radius.elliptical(230.0, 55.0)),
+              image: DecorationImage(
+                opacity: 0.8, 
+                image: AssetImage(images.homeImage1),
+                fit: BoxFit.cover,
+              )
             ),
+            height: screenSize.height * .4,
+            
+            
+            // child: ClipRRect(
+            //   borderRadius:
+            //       BorderRadius.vertical(bottom: Radius.elliptical(230.0, 55.0)),
+            //       child: Container(
+                    
+            //       ),
+            // ),
           ),
           bottom: PreferredSize(
-              preferredSize: Size.fromHeight(650),
+              preferredSize: Size.fromHeight(screenSize.height),
               child: Column(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(right: 200, bottom: 50),
+                    padding: const EdgeInsets.only(right: 200, bottom: 30),
                     child: Text(
                       'Good Morning, User',
                       style: TextStyle(color: Colors.white, fontSize: 20.7),
@@ -117,7 +132,7 @@ class _HomePageState extends State<HomePage> {
                                     child: Text(
                                       'Bill Pay',
                                       style: TextStyle(
-                                          color: Colors.white, fontSize: 20.0),
+                                          color: Colors.white, fontSize: 20),
                                     ),
                                   ),
                                 ])),
@@ -134,21 +149,23 @@ class _HomePageState extends State<HomePage> {
                         },
                         child: roundedContainer(
                             boxColor: Colors.amber,
-                            child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Arch(
-                                      child: Icon(Icons
-                                          .transfer_within_a_station_outlined)),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text(
-                                      'Top Up',
-                                      style: TextStyle(
-                                          color: Colors.black, fontSize: 20.0),
+                            child: Expanded(
+                              child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Arch(
+                                        child: Icon(Icons
+                                            .transfer_within_a_station_outlined)),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                        'Top Up',
+                                        style: TextStyle(
+                                            color: Colors.black, fontSize: 20.0),
+                                      ),
                                     ),
-                                  ),
-                                ])),
+                                  ]),
+                            )),
                       ),
                     ],
                   ),

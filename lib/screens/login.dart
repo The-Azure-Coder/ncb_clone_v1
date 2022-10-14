@@ -13,7 +13,12 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Container(
         child: Center(
-      child: ElevatedButton(child: Text('Home Page'), onPressed: () {Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));}),
+      child: ElevatedButton(
+          child: Text('Home Page'),
+          onPressed: () {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => HomePage()));
+          }),
     ));
   }
 }
