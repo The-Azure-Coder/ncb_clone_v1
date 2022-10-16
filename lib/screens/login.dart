@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:ncb_frontend_v1/utilities/login_page_util.dart';
-
 String bckgroundImage = 'assets/images/ncb_background.png';
+import 'package:ncb_frontend_v1/screens/debit_details.dart';
+import 'package:ncb_frontend_v1/screens/home_screen/home_page.dart';
 
-class loginPage extends StatefulWidget {
-  const loginPage({super.key});
+
+
+class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
 
   @override
-  State<loginPage> createState() => _MyloginPage();
+  State<LoginPage> createState() => _LoginPageState();
 }
 
-class _MyloginPage extends State<loginPage> {
+class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
@@ -92,6 +95,7 @@ class _MyloginPage extends State<loginPage> {
           ),
           image: bckgroundImage),
     );
+
   }
 }
 
