@@ -1,17 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:ncb_frontend_v1/screens/home_screen/home_page.dart';
 
-class loginPage extends StatefulWidget {
-  const loginPage({super.key});
+class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
 
   @override
-  State<loginPage> createState() => _MyloginPage();
+  State<LoginPage> createState() => _LoginPageState();
 }
 
-class _MyloginPage extends State<loginPage> {
+class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(child: (Text('login works'))),
-    );
+    return Container(
+        child: Center(
+      child: ElevatedButton(
+          child: Text('Home Page'),
+          onPressed: () {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => HomePage()));
+          }),
+    ));
   }
 }
