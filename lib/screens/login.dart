@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:ncb_frontend_v1/utilities/login_page_util.dart';
-String bckgroundImage = 'assets/images/ncb_background.png';
-import 'package:ncb_frontend_v1/screens/debit_details.dart';
 import 'package:ncb_frontend_v1/screens/home_screen/home_page.dart';
+import 'package:ncb_frontend_v1/utilities/login_page_util.dart';
 
-
+String bckgroundImage = 'assets/images/ncb_background.png';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -65,8 +63,7 @@ class _LoginPageState extends State<LoginPage> {
                                   ],
                                 ),
                               ),
-                            )
-                            ),
+                            )),
                         Positioned(
                           bottom: screenSize.height * 0.08,
                           child: IntrinsicHeight(
@@ -95,7 +92,6 @@ class _LoginPageState extends State<LoginPage> {
           ),
           image: bckgroundImage),
     );
-
   }
 }
 
@@ -198,38 +194,41 @@ class _LoginFormState extends State<LoginForm> {
               children: [
                 Flexible(
                     child: SizedBox(
-                      width: 330,
-                      height: 39,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.grey.shade600,
-                        ),
-                        onPressed: () {
-                          // if (_LoginFormState._formKey.currentState!.validate()) {
-                          //   Navigator.push(
-                          //       context,
-                          //       MaterialPageRoute(
-                          //           builder: (context) => NextPageClass()));
-                          // }
-                        },
-                        child: Text(
-                          "LOGIN",
-                          style: TextStyle(color: Colors.white, fontSize: 14),
-                        ),
-                      ),
-                    )),
+                  width: 330,
+                  height: 39,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.grey.shade600,
+                    ),
+                    onPressed: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => HomePage()));
+                    },
+                    // if (_LoginFormState._formKey.currentState!.validate()) {
+                    //   Navigator.push(
+                    //       context,
+                    //       MaterialPageRoute(
+                    //           builder: (context) => NextPageClass()));
+                    // }
+
+                    child: Text(
+                      "LOGIN",
+                      style: TextStyle(color: Colors.white, fontSize: 14),
+                    ),
+                  ),
+                )),
                 Flexible(
                     child: Container(
-                      alignment: Alignment.center,
-                      width: 100,
-                      height: 39,
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.lightBlue),
-                        borderRadius: BorderRadius.all(Radius.circular(30)),
-                      ),
-                      child: Text("SIGN UP",
-                          style: TextStyle(color: Colors.lightBlue, fontSize: 14)),
-                    )),
+                  alignment: Alignment.center,
+                  width: 100,
+                  height: 39,
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.lightBlue),
+                    borderRadius: BorderRadius.all(Radius.circular(30)),
+                  ),
+                  child: Text("SIGN UP",
+                      style: TextStyle(color: Colors.lightBlue, fontSize: 14)),
+                )),
               ],
             ),
           ],
