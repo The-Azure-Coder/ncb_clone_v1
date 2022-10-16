@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ncb_frontend_v1/constants/colors.dart';
+import 'package:ncb_frontend_v1/screens/transfer_page.dart';
+import 'package:ncb_frontend_v1/widgets/nav.dart';
 import 'home_content.dart';
 import 'home_utilities.dart';
 
@@ -16,7 +18,7 @@ class _HomePageState extends State<HomePage> {
     var screenSize = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Colors.white,
-      drawer: Drawer(),
+      drawer: MyDrawer(),
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(screenSize.height * .42),
         child: AppBar(
@@ -40,28 +42,24 @@ class _HomePageState extends State<HomePage> {
           ],
           flexibleSpace: Container(
             decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                Colors.black,
-                Colors.black
-              ]),
-              borderRadius: BorderRadius.vertical(bottom: Radius.elliptical(230.0, 55.0)),
-              image: DecorationImage(
-                opacity: 0.8, 
-                image: AssetImage(images.homeImage1),
-                fit: BoxFit.cover,
-              )
-            ),
+                gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [Colors.black, Colors.black]),
+                borderRadius: BorderRadius.vertical(
+                    bottom: Radius.elliptical(230.0, 55.0)),
+                image: DecorationImage(
+                  opacity: 0.8,
+                  image: AssetImage(images.homeImage1),
+                  fit: BoxFit.cover,
+                )),
             height: screenSize.height * .4,
-            
-            
+
             // child: ClipRRect(
             //   borderRadius:
             //       BorderRadius.vertical(bottom: Radius.elliptical(230.0, 55.0)),
             //       child: Container(
-                    
+
             //       ),
             // ),
           ),
@@ -88,7 +86,10 @@ class _HomePageState extends State<HomePage> {
                                 width: 0.0, color: Colors.transparent))),
                         clipBehavior: Clip.none,
                         onPressed: () {
-                          print('Clicked');
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => TransferPage()));
                         },
                         child: roundedContainer(
                             boxColor: Colors.blue,
@@ -161,7 +162,8 @@ class _HomePageState extends State<HomePage> {
                                       child: Text(
                                         'Top Up',
                                         style: TextStyle(
-                                            color: Colors.black, fontSize: 20.0),
+                                            color: Colors.black,
+                                            fontSize: 20.0),
                                       ),
                                     ),
                                   ]),
