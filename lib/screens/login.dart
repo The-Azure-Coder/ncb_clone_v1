@@ -1,5 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:ncb_frontend_v1/screens/home_screen/home_page.dart';
+import 'package:ncb_frontend_v1/services/network_handler.dart';
+import 'package:ncb_frontend_v1/services/secure_store_service.dart';
 import 'package:ncb_frontend_v1/utilities/login_page_util.dart';
 
 String bckgroundImage = 'assets/images/ncb_background.png';
@@ -103,7 +107,38 @@ class LoginForm extends StatefulWidget {
 }
 
 class _LoginFormState extends State<LoginForm> {
-  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
+
+  String _username = "";
+  String _password = "";
+  String _error = "";
+
+  Future<bool> submitLogin() async {
+    try {
+      String userData = await NetworkHandler.post(
+          "/auth/login", {"username": _username, "password": _password});
+      Map responseData = jsonDecode(userData);
+      print(responseData);
+      Map data = responseData["data"];
+
+      print(responseData["data"]["accessToken"]);
+      SecureStore.storeToken("jwt-auth", data["accessToken"]);
+      Map<String, dynamic> mapUser = data['user'];
+      SecureStore.createUser(mapUser);
+      return true;
+    } catch (error) {
+      setState(() {
+        _error = error.toString();
+        print(_error);
+      });
+      AlertDialog(
+        title: Text("Error"),
+        content: Text("$_error"),
+        backgroundColor: Colors.black,
+      );
+      return false;
+    }
+  }
 
   final myController = TextEditingController();
   final myController2 = TextEditingController();
@@ -132,6 +167,11 @@ class _LoginFormState extends State<LoginForm> {
           crossAxisAlignment: CrossAxisAlignment.end,
           children: <Widget>[
             TextFormField(
+                onChanged: (value) {
+                  setState(() {
+                    _username = value;
+                  });
+                },
                 decoration: const InputDecoration(
                   labelText: 'Username',
                   hintText: 'rackeel',
@@ -145,6 +185,11 @@ class _LoginFormState extends State<LoginForm> {
                 }),
             const SizedBox(height: 10),
             TextFormField(
+              onChanged: (value) {
+                setState(() {
+                  _password = value;
+                });
+              },
               decoration: InputDecoration(
                   hintText: 'Password',
                   suffixIcon: IconButton(
@@ -200,9 +245,13 @@ class _LoginFormState extends State<LoginForm> {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.grey.shade600,
                     ),
-                    onPressed: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => HomePage()));
+                    onPressed: () async {
+                      if (await submitLogin()) {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const HomePage()));
+                      }
                     },
                     // if (_LoginFormState._formKey.currentState!.validate()) {
                     //   Navigator.push(
