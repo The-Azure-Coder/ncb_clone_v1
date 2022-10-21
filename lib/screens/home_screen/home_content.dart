@@ -3,12 +3,14 @@ import 'package:ncb_frontend_v1/constants/colors.dart';
 
 import 'home_utilities.dart';
 
-// HomeContent
-class HomeContents extends StatelessWidget {
-  const HomeContents({
-    Key? key,
-  }) : super(key: key);
+class HomeContents extends StatefulWidget {
+  const HomeContents({super.key});
 
+  @override
+  State<HomeContents> createState() => _HomeContentsState();
+}
+
+class _HomeContentsState extends State<HomeContents> {
   @override
   Widget build(BuildContext context) {
     var screenSize = MediaQuery.of(context).size;
