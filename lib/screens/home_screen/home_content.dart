@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ncb_frontend_v1/constants/colors.dart';
+import 'package:ncb_frontend_v1/screens/account_details.dart';
 
 import 'home_utilities.dart';
 
@@ -132,7 +133,13 @@ class _HomeContentsState extends State<HomeContents> {
                               Directionality(
                                   textDirection: TextDirection.rtl,
                                   child: TextButton.icon(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  AccountDetailsScreen()));
+                                    },
                                     icon: Icon(
                                       Icons.arrow_back_outlined,
                                       size: 24,
