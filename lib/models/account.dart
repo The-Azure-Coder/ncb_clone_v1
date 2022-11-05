@@ -1,3 +1,5 @@
+import 'package:ncb_frontend_v1/models/transaction.dart';
+
 class Account {
   final String id;
   final String userID;
@@ -5,16 +7,16 @@ class Account {
   final String accNo;
   final String currency;
   final double balance;
-  final List transactions;
+  late Transaction transactions;
 
-  Account(
-      {required this.id,
-      required this.userID,
-      required this.accType,
-      required this.accNo,
-      required this.currency,
-      required this.balance,
-      required this.transactions});
+  Account({
+    required this.id,
+    required this.userID,
+    required this.accType,
+    required this.accNo,
+    required this.currency,
+    required this.balance,
+  });
 
   factory Account.fromJson(Map<String, dynamic> json) {
     return Account(
@@ -24,7 +26,6 @@ class Account {
       accNo: json['accNo'],
       currency: json['currency'],
       balance: json['balance'],
-      transactions: json['transactions'],
     );
   }
 }

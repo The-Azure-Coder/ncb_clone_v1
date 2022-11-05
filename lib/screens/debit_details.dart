@@ -17,14 +17,23 @@ class debitPage extends StatefulWidget {
 
 class _MydebitPage extends State<debitPage> {
   Account? accountDetail = Account(
-      id: '',
-      userID: '',
-      accType: '',
-      accNo: '',
-      currency: '',
-      balance: 0,
-      transactions: []);
+    id: '',
+    userID: '',
+    accType: '',
+    accNo: '',
+    currency: '',
+    balance: 0,
+  );
   // Account accInfo;
+
+  // Transaction transactions = Transaction(
+  //     id: '',
+  //     accId: '',
+  //     openingBalance: 0,
+  //     closingBalance: "closingBalance",
+  //     type: "type",
+  //     amount: "amount",
+  //     description: "description");
 
   void getAccountList() async {
     final accountID = widget.accountDetailId;
@@ -38,13 +47,15 @@ class _MydebitPage extends State<debitPage> {
       print('Before get AccountDetail');
 
       accountDetail = Account(
-          id: jsonData['_id'],
-          userID: jsonData['userID'],
-          accType: jsonData['accType'],
-          accNo: jsonData['accNo'],
-          currency: jsonData['currency'],
-          balance: jsonData['balance'],
-          transactions: jsonData['transactions']);
+        id: jsonData['_id'],
+        userID: jsonData['userID'],
+        accType: jsonData['accType'],
+        accNo: jsonData['accNo'],
+        currency: jsonData['currency'],
+        balance: jsonData['balance'],
+      );
+      // accountDetail!.transactions =
+      //     Transaction.fromJson(jsonData['transactions']);
 
       print('After get AccountDetail');
 
