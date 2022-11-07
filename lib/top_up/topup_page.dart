@@ -100,9 +100,14 @@ class _TopUpState extends State<TopUp> {
         Center(
           child: ElevatedButton(
             style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(Colors.amber), padding: MaterialStatePropertyAll(EdgeInsets.only(left: 30, right: 30))),
+                backgroundColor: MaterialStateProperty.all(Colors.amber),
+                padding: MaterialStatePropertyAll(
+                    EdgeInsets.only(left: 30, right: 30))),
             onPressed: () {},
-            child: Text('Submit', style: TextStyle(fontSize: 20, color: Colors.black),),
+            child: Text(
+              'Submit',
+              style: TextStyle(fontSize: 20, color: Colors.black),
+            ),
           ),
         )
       ]),

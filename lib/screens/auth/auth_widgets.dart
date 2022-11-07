@@ -3,10 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:ncb_frontend_v1/screens/home_screen/home_page.dart';
 import 'package:ncb_frontend_v1/services/network_handler.dart';
 import 'package:ncb_frontend_v1/services/secure_store_service.dart';
-import 'package:ncb_frontend_v1/screens/login_screen/login_page_utils.dart';
+import 'package:ncb_frontend_v1/screens/auth/login_page_utils.dart';
 import 'package:ncb_frontend_v1/widgets/custom_form_field.dart';
-import 'package:ncb_frontend_v1/screens/login_screen/login_state_mgmt.dart';
-
+import 'package:ncb_frontend_v1/screens/auth/login_state_mgmt.dart';
 String bckgroundImage = 'assets/images/ncb_background.png';
 
 class LoginPage extends StatefulWidget {
@@ -16,7 +15,6 @@ class LoginPage extends StatefulWidget {
   @override
   State<LoginPage> createState() => _LoginPageState();
 }
-
 class _LoginPageState extends State<LoginPage> {
   
 
@@ -107,6 +105,7 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 }
+//--------------------------------------------
 
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
@@ -114,7 +113,6 @@ class LoginForm extends StatefulWidget {
   @override
   State<LoginForm> createState() => _LoginFormState();
 }
-
 class _LoginFormState extends State<LoginForm> {
   final _formKey = GlobalKey<FormState>();
 
@@ -168,16 +166,30 @@ class _LoginFormState extends State<LoginForm> {
 
   @override
   Widget build(BuildContext context) {
+    var inherited = FormStateInheritedWidget.of(context);
     return Form(
         key: _formKey,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: <Widget>[
-            CustomFormField(
-              fieldVar: _username,
-              fieldCtrl: usernameCtrl,
-              labelText: "Username",
-              hintText: "rackeel",
+
+            TextFormField(
+              onChanged: (value) {
+                setState(() {
+                  _username = value;
+                });
+              },
+              decoration: InputDecoration(
+                  labelText: 'Username',
+                  hintText: 'jdoe7111',
+                  ),
+              controller: usernameCtrl,
+              validator: (String? val) {
+                if (val == null || val.isEmpty) {
+                  return "Username field is required";
+                }
+                return null;
+              },
             ),
             const SizedBox(height: 10),
             TextFormField(
@@ -230,12 +242,47 @@ class _LoginFormState extends State<LoginForm> {
               ],
             ),
             const SizedBox(height: 20),
-            BtnContainer(),
-            const SizedBox(height: 30),
+            BtnContainer(
+              formActionButtons: <Widget>[
+                drawLoginBtn(),
+                toggleForm(inherited , Screen.login),
+              ],
+            ), const SizedBox(height: 20),
           ],
         ));
   }
+
+  Widget drawLoginBtn(){
+    return Flexible(
+        child: SizedBox(
+          width: 330,
+          height: 39,
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.grey.shade600,
+            ),
+            onPressed:() async {
+                if (await submitLogin()) {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const HomePage()));
+                }
+            },
+            child: Text(
+              "LOGIN",
+              style: TextStyle(color: Colors.white, fontSize: 14),
+            ),
+          ),
+        ));
+  }
+
+  git config --global user.email "rackeel13@gmail.com"
+  git config --global user.name "cout-Rackeel"
+
+
 }
+//--------------------------------------------
 
 class RegisterForm extends StatefulWidget {
   const RegisterForm({super.key});
@@ -243,7 +290,6 @@ class RegisterForm extends StatefulWidget {
   @override
   _RegisterFormState createState() => _RegisterFormState();
 }
-
 class _RegisterFormState extends State<RegisterForm> {
   final _formKey = GlobalKey<FormState>();
   String _username = "";
@@ -266,6 +312,7 @@ class _RegisterFormState extends State<RegisterForm> {
   @override
   Widget build(BuildContext context) {
      final screenSize = MediaQuery.of(context).size;
+     var inherited = FormStateInheritedWidget.of(context);
     return Form(
       key: _formKey,
       child: Padding(
@@ -276,19 +323,48 @@ class _RegisterFormState extends State<RegisterForm> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
 
-              Expanded(child:  CustomFormField(
-                fieldVar: _username,
-                fieldCtrl: usernameCtrl,
-                labelText: "Username"),
+              Expanded(
+                child:   TextFormField(
+              onChanged: (value) {
+                setState(() {
+                  _username = value;
+                });
+              },
+              decoration: InputDecoration(
+                  hintText: 'janed@mail.com',
+                  labelText: 'Username',
+              ),
+              controller: usernameCtrl,
+              validator: (String? val) {
+                if (val == null || val.isEmpty) {
+                  return "Username field is required";
+                }
+                return null;
+              },
+            ),
             ),
 
             SizedBox(width: screenSize.width * 0.09),
 
              Expanded(
-              child:  CustomFormField(
-                fieldVar: _trn,
-                fieldCtrl: trnCtrl,
-                labelText: "TRN"),
+                child:   TextFormField(
+              onChanged: (value) {
+                setState(() {
+                  _trn = value;
+                });
+              },
+              decoration: InputDecoration(
+                  hintText: '111-111-111',
+                  labelText: 'TRN',
+              ),
+              controller: usernameCtrl,
+              validator: (String? val) {
+                if (val == null || val.isEmpty) {
+                  return "TRN field is required";
+                }
+                return null;
+              },
+            ),
             ),
 
 
@@ -296,13 +372,26 @@ class _RegisterFormState extends State<RegisterForm> {
           ]),
           Row(
             children: [
-              Expanded(child: 
-              CustomFormField(
-                fieldVar: _phnNumber,
-                fieldCtrl: phnNumberCtrl,
-                labelText: "Phone Number",
-              )
+              Expanded(
+                child:   TextFormField(
+              onChanged: (value) {
+                setState(() {
+                  _phnNumber = value;
+                });
+              },
+              decoration: InputDecoration(
+                  hintText: 'janed@mail.com',
+                  labelText: 'Phone Number',
               ),
+              controller: usernameCtrl,
+              validator: (String? val) {
+                if (val == null || val.isEmpty) {
+                  return "Phone number field is required";
+                }
+                return null;
+              },
+            ),
+            ),
             ],
           ),
           Row(
@@ -341,156 +430,62 @@ class _RegisterFormState extends State<RegisterForm> {
             ],
           ),
           const SizedBox(height: 20),
-          BtnContainer(),
+          BtnContainer(
+            formActionButtons: <Widget>[
+              toggleForm(inherited , Screen.register),
+            ],
+          ),
           const SizedBox(height: 20),
         ]),
       ),
     );
   }
 }
+//--------------------------------------------
 
-class BtnContainer extends StatefulWidget {
-  const BtnContainer({ Key? key }) : super(key: key);
+class BtnContainer extends StatelessWidget {
+    final List<Widget> formActionButtons;
+    const BtnContainer({ Key? key, required this.formActionButtons }) : super(key: key);
 
-  @override
-  _BtnContainerState createState() => _BtnContainerState();
-}
-
-class _BtnContainerState extends State<BtnContainer> {
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Flexible(
-                    child: SizedBox(
-                  width: 330,
-                  height: 39,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.grey.shade600,
-                    ),
-                     onPressed:(){
-                      final provider = FormStateInheritedWidget.of(context);
-                            provider?.setToLogin();
-                     },
-                    // () async {
-                    //   if (await submitLogin()) {
-                    //     Navigator.push(
-                    //         context,
-                    //         MaterialPageRoute(
-                    //             builder: (context) => const HomePage()));
-                    //   }
-                    //   if(_screenState == Screen.register){
-                    //     _screenState = Screen.login;
-                    //   }
-                    // },
-                    // if (_LoginFormState._formKey.currentState!.validate()) {
-                    //   Navigator.push(
-                    //       context,
-                    //       MaterialPageRoute(
-                    //           builder: (context) => NextPageClass()));
-                    // }
-
-                    child: Text(
-                      "LOGIN",
-                      style: TextStyle(color: Colors.white, fontSize: 14),
-                    ),
-                  ),
-                )),
-                Flexible(
-                    child: Container(
-                  alignment: Alignment.center,
-                  width: 100,
-                  height: 39,
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.lightBlue),
-                    borderRadius: BorderRadius.all(Radius.circular(30)),
-                  ),
-                  child: TextButton(
-                          onPressed: (){
-                            final provider = FormStateInheritedWidget.of(context);
-                            provider?.setToRegister();
-                          },
-                          child: Text(
-                            "SIGN UP",
-                            style:
-                            TextStyle(
-                              color:
-                              Colors.lightBlue,
-                               fontSize: 14)
-                               ),
-                          )
-                )),
-              ],
-            );
-}
+    @override
+    Widget build(BuildContext context) {
+      return Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children:formActionButtons
+      );
+    }
   }
+Widget toggleForm(provider , Screen formType){
+  return Flexible(
+      child: Container(
+          alignment: Alignment.center,
+          width: 100,
+          height: 39,
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.lightBlue),
+            borderRadius: BorderRadius.all(Radius.circular(30)),
+          ),
+          child: TextButton(
+            onPressed: (){
+              if(formType == Screen.login){
+                provider?.setToRegister();
+              }
+
+              if(formType == Screen.register){
+                provider?.setToLogin();
+              }
+
+            },
+            child: Text(
+                formType == Screen.login ? "SIGN UP" : "LOGIN",
+                style:
+                TextStyle(
+                    color:
+                    Colors.lightBlue,
+                    fontSize: 14)
+            ),
+          )
+      ));
+}
 
 
-
-// Widget buildFormBtnCont({
-//   required BuildContext context ,
-//   required Future<bool> loginLogic,
-//   required Function signUpLogic
-// }
-//   ){
-//   return  Row(
-//               mainAxisAlignment: MainAxisAlignment.spaceAround,
-//               children: [
-//                 Flexible(
-//                     child: SizedBox(
-//                   width: 330,
-//                   height: 39,
-//                   child: ElevatedButton(
-//                     style: ElevatedButton.styleFrom(
-//                       backgroundColor: Colors.grey.shade600,
-//                     ),
-//                     onPressed: () async {
-//                       if (await loginLogic && _screenState == Screen.login) {
-//                         Navigator.push(
-//                             context,
-//                             MaterialPageRoute(
-//                                 builder: (context) => const HomePage()));
-//                       }
-//                       if(_screenState == Screen.register){
-//                         _screenState = Screen.login;
-//                       }
-//                     },
-//                     // if (_LoginFormState._formKey.currentState!.validate()) {
-//                     //   Navigator.push(
-//                     //       context,
-//                     //       MaterialPageRoute(
-//                     //           builder: (context) => NextPageClass()));
-//                     // }
-
-//                     child: Text(
-//                       "LOGIN",
-//                       style: TextStyle(color: Colors.white, fontSize: 14),
-//                     ),
-//                   ),
-//                 )),
-//                 Flexible(
-//                     child: Container(
-//                   alignment: Alignment.center,
-//                   width: 100,
-//                   height: 39,
-//                   decoration: BoxDecoration(
-//                     border: Border.all(color: Colors.lightBlue),
-//                     borderRadius: BorderRadius.all(Radius.circular(30)),
-//                   ),
-//                   child: TextButton(
-//                           onPressed: signUpLogic(),
-//                           child: Text(
-//                             "SIGN UP",
-//                             style:
-//                             TextStyle(
-//                               color:
-//                               Colors.lightBlue,
-//                                fontSize: 14)
-//                                ),
-//                           )
-//                 )),
-//               ],
-//             );
-// }

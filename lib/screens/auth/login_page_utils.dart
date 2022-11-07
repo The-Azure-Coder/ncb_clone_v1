@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 enum Screen { login, register }
 
 class LoginClip extends CustomClipper<Path> {

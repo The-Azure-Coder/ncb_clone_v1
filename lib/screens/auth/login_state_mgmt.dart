@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ncb_frontend_v1/screens/login_screen/login_page_utils.dart';
+import 'package:ncb_frontend_v1/screens/auth/login_page_utils.dart';
 
 
 class LoginStateMgmt extends StatefulWidget {
