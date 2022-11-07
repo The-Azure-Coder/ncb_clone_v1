@@ -277,10 +277,6 @@ class _LoginFormState extends State<LoginForm> {
         ));
   }
 
-  git config --global user.email "rackeel13@gmail.com"
-  git config --global user.name "cout-Rackeel"
-
-
 }
 //--------------------------------------------
 
