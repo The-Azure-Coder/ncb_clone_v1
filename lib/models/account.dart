@@ -1,27 +1,31 @@
-class Account {
-  final String UserID;
-  final String accType;
-  final int accNo;
-  final int currency;
-  final int balance;
-  final int transaction;
+import 'package:ncb_frontend_v1/models/transaction.dart';
 
-  const Account(
-      {required this.UserID,
-      required this.accType,
-      required this.accNo,
-      required this.currency,
-      required this.balance,
-      required this.transaction});
+class Account {
+  final String id;
+  final String userID;
+  final String accType;
+  final String accNo;
+  final String currency;
+  final double balance;
+  late Transaction transactions;
+
+  Account({
+    required this.id,
+    required this.userID,
+    required this.accType,
+    required this.accNo,
+    required this.currency,
+    required this.balance,
+  });
 
   factory Account.fromJson(Map<String, dynamic> json) {
     return Account(
-      UserID: json['UserID'],
+      id: json['_id'],
+      userID: json['userID'],
+      accType: json['accType'],
       accNo: json['accNo'],
       currency: json['currency'],
-      accType: json['accType'],
       balance: json['balance'],
-      transaction: json['transaction'],
     );
   }
 }
