@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../models/user.dart';
 
+
 class SecureStore {
   //Creates a secure persistent storage location for simple data. Something like local storage.
   static final _storage = new FlutterSecureStorage();
