@@ -1,12 +1,16 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:ncb_frontend_v1/screens/auth/auth.dart';
 import 'package:ncb_frontend_v1/screens/home_screen/home_page.dart';
 import 'package:ncb_frontend_v1/services/network_handler.dart';
 import 'package:ncb_frontend_v1/services/secure_store_service.dart';
 import 'package:ncb_frontend_v1/screens/auth/login_page_utils.dart';
 import 'package:ncb_frontend_v1/widgets/custom_form_field.dart';
 import 'package:ncb_frontend_v1/screens/auth/login_state_mgmt.dart';
+import 'dart:math';
+
 String bckgroundImage = 'assets/images/ncb_background.png';
+
 
 class LoginPage extends StatefulWidget {
   final Screen screenState;
@@ -288,10 +292,24 @@ class RegisterForm extends StatefulWidget {
 }
 class _RegisterFormState extends State<RegisterForm> {
   final _formKey = GlobalKey<FormState>();
+  String _firstname = "";
+  String _lastname = "";
   String _username = "";
+  String _email = "";
   String _trn = "";
+  String _idType = "";
+  String _idNumber = "";
   String _phnNumber = "";
   String _password = "";
+  String _error = "";
+
+  @override
+  void initState() {
+    super.initState();
+    var random = new Random();
+    var randInt = random.nextInt(999999);
+    _idNumber =  'A$randInt';
+  }
 
   bool _obscureText = true;
   void _toggle() {
@@ -300,10 +318,50 @@ class _RegisterFormState extends State<RegisterForm> {
     });
   }
 
+  static final firstnameCtrl = TextEditingController();
+  static final lastnameCtrl = TextEditingController();
   static final usernameCtrl = TextEditingController();
+  static final emailCtrl = TextEditingController();
   static final trnCtrl = TextEditingController();
   static final phnNumberCtrl = TextEditingController();
   static final passwordCtrl = TextEditingController();
+  static final idTypeCtrl = TextEditingController();
+
+  Future<bool> register() async {
+  try{
+    var reqBody = {
+      "firstName":_firstname,
+      "lastName":_lastname,
+      "email":_email,
+      "cellphone":_phnNumber,
+      "username" :_username,
+      "trn" :_trn,
+      "idType":_password,
+      "idNumber": _idNumber
+    };
+    
+    String userData = await NetworkHandler.post(
+      "/auth/register",
+      reqBody
+    );
+
+    Map respData = jsonDecode(userData);
+
+    debugPrint('done');
+    return true;
+  }catch(error){
+    setState(() {
+        _error = error.toString();
+        print(_error);
+      });
+      AlertDialog(
+        title: Text("Error"),
+        content: Text("$_error"),
+        backgroundColor: Colors.black,
+      );
+      return false;
+  }
+}
 
   @override
   Widget build(BuildContext context) {
@@ -323,17 +381,17 @@ class _RegisterFormState extends State<RegisterForm> {
                 child:   TextFormField(
               onChanged: (value) {
                 setState(() {
-                  _username = value;
+                  _firstname = value;
                 });
               },
               decoration: InputDecoration(
-                  hintText: 'janed@mail.com',
-                  labelText: 'Username',
+                  hintText: _idNumber,
+                  labelText: 'First name',
               ),
-              controller: usernameCtrl,
+              controller: firstnameCtrl,
               validator: (String? val) {
                 if (val == null || val.isEmpty) {
-                  return "Username field is required";
+                  return "First name field is required";
                 }
                 return null;
               },
@@ -346,14 +404,14 @@ class _RegisterFormState extends State<RegisterForm> {
                 child:   TextFormField(
               onChanged: (value) {
                 setState(() {
-                  _trn = value;
+                  _lastname = value;
                 });
               },
               decoration: InputDecoration(
-                  hintText: '111-111-111',
-                  labelText: 'TRN',
+                  hintText: 'brooks',
+                  labelText: 'Last name',
               ),
-              controller: usernameCtrl,
+              controller: lastnameCtrl,
               validator: (String? val) {
                 if (val == null || val.isEmpty) {
                   return "TRN field is required";
@@ -364,6 +422,105 @@ class _RegisterFormState extends State<RegisterForm> {
             ),
 
 
+
+          ]),
+          Row(
+            mainAxisSize:MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+
+            Expanded(
+                child:   TextFormField(
+              onChanged: (value) {
+                setState(() {
+                  _username = value;
+                });
+              },
+              decoration: InputDecoration(
+                  hintText: 'jdoe7111',
+                  labelText: 'Username',
+              ),
+              controller: usernameCtrl,
+              validator: (String? val) {
+                if (val == null || val.isEmpty) {
+                  return "Username field is required";
+                }
+                return null;
+              },
+            ),
+            ),
+            SizedBox(width: screenSize.width * 0.09),
+            Expanded(
+                child:   TextFormField(
+              onChanged: (value) {
+                setState(() {
+                  _trn = value;
+                });
+              },
+              decoration: InputDecoration(
+                  hintText: '111-111-111',
+                  labelText: 'TRN',
+              ),
+              controller: trnCtrl,
+              validator: (String? val) {
+                if (val == null || val.isEmpty) {
+                  return "TRN field is required";
+                }
+                return null;
+              },
+            ),
+            ),
+
+
+
+          ]),
+          Row(
+            mainAxisSize:MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+
+             Expanded(
+                child:   TextFormField(
+              onChanged: (value) {
+                setState(() {
+                  _idType = value;
+                });
+              },
+              decoration: InputDecoration(
+                  hintText: 'Passport',
+                  labelText: 'Id Type',
+              ),
+              controller: idTypeCtrl,
+              validator: (String? val) {
+                if (val == null || val.isEmpty) {
+                  return "Id type field is required";
+                }
+                return null;
+              },
+            ),
+            ),
+             SizedBox(width: screenSize.width * 0.09),
+             Expanded(
+                child:   TextFormField(
+              onChanged: (value) {
+                setState(() {
+                  _email = value;
+                });
+              },
+              decoration: InputDecoration(
+                  hintText: 'janed7111@email.co',
+                  labelText: 'Email',
+              ),
+              controller: emailCtrl,
+              validator: (String? val) {
+                if (val == null || val.isEmpty) {
+                  return "Email field is required";
+                }
+                return null;
+              },
+            ),
+            ),
+             
 
           ]),
           Row(
@@ -379,7 +536,7 @@ class _RegisterFormState extends State<RegisterForm> {
                   hintText: 'janed@mail.com',
                   labelText: 'Phone Number',
               ),
-              controller: usernameCtrl,
+              controller: phnNumberCtrl,
               validator: (String? val) {
                 if (val == null || val.isEmpty) {
                   return "Phone number field is required";
@@ -427,15 +584,41 @@ class _RegisterFormState extends State<RegisterForm> {
           ),
           const SizedBox(height: 20),
           BtnContainer(
-            formActionButtons: <Widget>[
-              toggleForm(inherited , Screen.register),
-            ],
-          ),
-          const SizedBox(height: 20),
+              formActionButtons: <Widget>[
+                drawRegisterBtn(),
+                toggleForm(inherited , Screen.login),
+              ],
+            ), const SizedBox(height: 20),
         ]),
       ),
     );
   }
+   Widget drawRegisterBtn(){
+    return Flexible(
+        child: SizedBox(
+          width: 330,
+          height: 39,
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.grey.shade600,
+            ),
+            onPressed:() async {
+              print(await register());
+                if (await register()) {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const AuthScreen()));
+                }
+            },
+            child: Text(
+              "LOGIN",
+              style: TextStyle(color: Colors.white, fontSize: 14),
+            ),
+          ),
+        ));
+  }
+
 }
 //--------------------------------------------
 
