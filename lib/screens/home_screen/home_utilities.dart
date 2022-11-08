@@ -1,5 +1,10 @@
 // Box Arc
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:ncb_frontend_v1/screens/debit_details.dart';
+
+import '../../services/network_handler.dart';
 
 class Arch extends StatelessWidget {
   const Arch({required this.child});
@@ -100,143 +105,177 @@ class _AccordionState extends State<Accordion> {
   }
 }
 
-
-// Widget for Accordion content
-class doubleBoxes extends StatelessWidget {
-  const doubleBoxes({
-    Key? key,
-    required this.screenSize,
-  }) : super(key: key);
-
+class doubleBoxes extends StatefulWidget {
+  const doubleBoxes({super.key, required this.screenSize});
   final Size screenSize;
 
   @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Container(
-          width: screenSize.width,
-          height: screenSize.height * .07,
-          decoration: BoxDecoration(
-              boxShadow: const [
-                BoxShadow(
-                    color: Colors.grey,
-                    blurRadius: 5,
-                    spreadRadius: 1,
-                    offset: Offset(4, 4)),
-              ],
-              borderRadius: BorderRadius.all(Radius.circular(10.0)),
-              color: Colors.white),
-          padding: EdgeInsets.all(8),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'New Debit Card?',
-                style: TextStyle(color: Colors.black, fontSize: 15),
-              ),
-              Directionality(
-                  textDirection: TextDirection.rtl,
-                  child: TextButton.icon(
-                    onPressed: () {},
-                    icon: Icon(
-                      Icons.chevron_left_outlined,
-                      color: Colors.black,
-                      size: 24,
-                    ),
-                    label: Text(
-                      'Activate it Here',
-                      style:
-                          TextStyle(color: Colors.black, fontSize: 15),
-                    ),
-                  ))
-            ],
-          ),
-        ),
-        Container(
-          width: screenSize.width,
-          // height: screenSize.height * .07,
-          margin: EdgeInsets.only(top: 20.0),
-          decoration: BoxDecoration(
-              boxShadow: const [
-                BoxShadow(
-                    color: Colors.grey,
-                    blurRadius: 5,
-                    spreadRadius: 1,
-                    offset: Offset(4, 4)),
-              ],
-              border:
-                  Border.all(color: Color.fromARGB(255, 180, 172, 172)),
-              borderRadius: BorderRadius.all(Radius.circular(10.0)),
-              color: Colors.white),
-          child: Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Savings',
-                      style: TextStyle(fontSize: 15),
-                    ),
-                    Text('Account Balance')
-                  ],
-                ),
-                Container(
-                  margin: EdgeInsets.only(top: 15.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        '....7742',
-                        style: TextStyle(
-                            fontSize: 17, fontWeight: FontWeight.w700),
-                      ),
-                      Text(
-                        'JMD 1314.14',
-                        style: TextStyle(
-                            fontSize: 17, fontWeight: FontWeight.w700),
-                      )
-                    ],
-                  ),
-                ),
-                const Divider(
-                  height: 20,
-                  thickness: 2,
-                  indent: 0,
-                  endIndent: 0,
-                  color: Colors.black,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    SizedBox(
-                      width: 100,
-                      height: 20,
-                    ),
-                    Directionality(
-                        textDirection: TextDirection.rtl,
-                        child: TextButton.icon(
-                          onPressed: () {},
-                          icon: Icon(
-                            Icons.arrow_back_outlined,
-                            size: 24,
-                          ),
-                          label: Text(
-                            'Account Details',
-                            style: TextStyle(fontSize: 15),
-                          ),
-                        ))
-                  ],
-                )
-              ],
-            ),
-          ),
-        )
-      ],
-    );
-  }
+  State<doubleBoxes> createState() => _doubleBoxesState();
 }
 
+class _doubleBoxesState extends State<doubleBoxes> {
+  var _accountList = [];
+  String accType = '';
+  String userID = '';
+  String accNo = '';
+  String currency = '';
+  String balance = '';
+  String transaction = '';
+  String error = '';
+
+  void getAccountList() async {
+    try {
+      final response = await NetworkHandler.get(endpoint: '/accounts');
+      final jsonData = jsonDecode(response)['data'];
+      print(response);
+
+      setState(() {
+        _accountList = jsonData;
+      });
+    } catch (err) {}
+  }
+
+  void initState() {
+    super.initState();
+    getAccountList();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+      Container(
+        width: widget.screenSize.width,
+        height: widget.screenSize.height * .07,
+        decoration: BoxDecoration(
+            boxShadow: const [
+              BoxShadow(
+                  color: Colors.grey,
+                  blurRadius: 5,
+                  spreadRadius: 1,
+                  offset: Offset(4, 4)),
+            ],
+            borderRadius: BorderRadius.all(Radius.circular(10.0)),
+            color: Colors.white),
+        padding: EdgeInsets.all(8),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              'New Debit Card?',
+              style: TextStyle(color: Colors.black, fontSize: 15),
+            ),
+            Directionality(
+                textDirection: TextDirection.rtl,
+                child: TextButton.icon(
+                  onPressed: () {},
+                  icon: Icon(
+                    Icons.chevron_left_outlined,
+                    color: Colors.black,
+                    size: 24,
+                  ),
+                  label: Text(
+                    'Activate it Here',
+                    style: TextStyle(color: Colors.black, fontSize: 15),
+                  ),
+                ))
+          ],
+        ),
+      ),
+      ListView.builder(
+          shrinkWrap: true,
+          physics: const ScrollPhysics(),
+          itemCount: _accountList.length,
+          itemBuilder: (context, i) {
+            final account = _accountList[i];
+            return Container(
+                width: widget.screenSize.width,
+                // height: screenSize.height * .07,
+                margin: EdgeInsets.only(top: 20.0),
+                decoration: BoxDecoration(
+                    boxShadow: const [
+                      BoxShadow(
+                          color: Colors.grey,
+                          blurRadius: 5,
+                          spreadRadius: 1,
+                          offset: Offset(4, 4)),
+                    ],
+                    border:
+                        Border.all(color: Color.fromARGB(255, 180, 172, 172)),
+                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                    color: Colors.white),
+                child: Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Savings',
+                            style: TextStyle(fontSize: 15),
+                          ),
+                          Text('Account Balance')
+                        ],
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(top: 15.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              '${account['accNo']}',
+                              style: TextStyle(
+                                  fontSize: 17, fontWeight: FontWeight.w700),
+                            ),
+                            Text(
+                              '${account['balance']}',
+                              style: TextStyle(
+                                  fontSize: 17, fontWeight: FontWeight.w700),
+                            )
+                          ],
+                        ),
+                      ),
+                      const Divider(
+                        height: 20,
+                        thickness: 2,
+                        indent: 0,
+                        endIndent: 0,
+                        color: Colors.black,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          SizedBox(
+                            width: 100,
+                            height: 20,
+                          ),
+                          Directionality(
+                              textDirection: TextDirection.rtl,
+                              child: TextButton.icon(
+                                onPressed: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => debitPage(
+                                                accountDetailId:
+                                                    '${account['_id']}',
+                                              )));
+                                },
+                                icon: Icon(
+                                  Icons.arrow_back_outlined,
+                                  size: 24,
+                                ),
+                                label: Text(
+                                  'Account Details',
+                                  style: TextStyle(fontSize: 15),
+                                ),
+                              ))
+                        ],
+                      ),
+                    ],
+                  ),
+                ));
+          }),
+    ]);
+  }
+}
