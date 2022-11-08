@@ -6,27 +6,33 @@ class TextIconBar extends StatelessWidget with PreferredSizeWidget {
   final Size preferredSize;
   final String title;
 
-  TextIconBar({Key? key, required this.title})
-      : preferredSize = const Size.fromHeight(120.0),
-        super(key: key);
+  TextIconBar({Key? key, required this.title, required this.preferredSize})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
-        title: Text(
-          title,
-          style: TextStyle(
-              color: Colors.white, fontSize: 25, fontWeight: FontWeight.w800),
-        ),
-        titleSpacing: 00.0,
-        centerTitle: true,
-        toolbarHeight: 120.2,
-        toolbarOpacity: 0.8,
-        actions: [
-          IconButton(
-              onPressed: () {},
-              icon: Icon(Icons.close, color: Colors.white, size: 37))
-        ]);
+      title: Text(
+        title,
+        style: TextStyle(
+            color: Colors.white, fontSize: 25, fontWeight: FontWeight.w800),
+      ),
+      titleSpacing: 00.0,
+      centerTitle: true,
+      toolbarHeight: 120.2,
+      toolbarOpacity: 0.8,
+      backgroundColor: Colors.transparent,
+      elevation: 0,
+      actions: [
+        IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.close, color: Colors.white, size: 37))
+      ],
+      flexibleSpace: Container(
+        height: 180,
+        color: Colors.blue,
+      ),
+    );
   }
 }
 
@@ -112,4 +118,3 @@ class _IconDropDownState extends State<IconDropDown> {
     );
   }
 }
-

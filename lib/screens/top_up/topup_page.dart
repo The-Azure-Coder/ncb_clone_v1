@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ncb_frontend_v1/top_up/topup_utilities.dart';
+import 'package:ncb_frontend_v1/screens/top_up/topup_utilities.dart';
 
 class TopUp extends StatefulWidget {
   const TopUp({super.key});
@@ -12,7 +12,7 @@ class _TopUpState extends State<TopUp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: TextIconBar(title: 'Prepaid Top-Up'),
+      appBar:TextIconBar(title: 'Prepaid Top-Up', preferredSize: Size.fromHeight(120.0)),
       body: ListView(children: [
         Form(
           child: Column(

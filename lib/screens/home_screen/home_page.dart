@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:ncb_frontend_v1/constants/colors.dart';
+import 'package:ncb_frontend_v1/screens/login.dart';
 import 'package:ncb_frontend_v1/screens/transfer_page.dart';
+import 'package:ncb_frontend_v1/utilities/login_page_util.dart';
 import 'package:ncb_frontend_v1/widgets/nav.dart';
 import 'home_content.dart';
 import 'home_utilities.dart';
@@ -31,7 +33,7 @@ class _HomePageState extends State<HomePage> {
           actions: [
             TextButton(
               onPressed: () {
-                Navigator.pop(context);
+                Navigator.push(context, MaterialPageRoute(builder: (context)=> LoginPage()));
               },
               child: Text('Log Out',
                   style: TextStyle(
