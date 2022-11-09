@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:ncb_frontend_v1/constants/colors.dart';
+import 'package:ncb_frontend_v1/screens/bill_payment.dart';
 import 'package:ncb_frontend_v1/screens/transfer_page.dart';
+import 'package:ncb_frontend_v1/top_up/topup_page.dart';
 import 'package:ncb_frontend_v1/widgets/nav.dart';
 import 'home_content.dart';
 import 'home_utilities.dart';
@@ -118,7 +120,10 @@ class _HomePageState extends State<HomePage> {
                                 width: 0.0, color: Colors.transparent))),
                         clipBehavior: Clip.none,
                         onPressed: () {
-                          print('Clicked');
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => BillPayment()));
                         },
                         child: roundedContainer(
                             boxColor: Color(0xFF002A54),
@@ -146,7 +151,10 @@ class _HomePageState extends State<HomePage> {
                                 width: 0.0, color: Colors.transparent))),
                         clipBehavior: Clip.none,
                         onPressed: () {
-                          print('Clicked');
+                           Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => TopUp()));
                         },
                         child: roundedContainer(
                             boxColor: Colors.amber,
