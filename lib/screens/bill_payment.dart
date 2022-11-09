@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:ncb_frontend_v1/utilities/bill_payment_util.dart';
 
-class TopUp extends StatefulWidget {
-  const TopUp({super.key});
+class BillPayment extends StatefulWidget {
+  const BillPayment({super.key});
 
   @override
-  State<TopUp> createState() => _TopUpState();
+  State<BillPayment> createState() => _BillPayment();
 }
 
-class _TopUpState extends State<TopUp> {
+class _BillPayment extends State<BillPayment> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
