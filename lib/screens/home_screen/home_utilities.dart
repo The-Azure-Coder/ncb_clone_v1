@@ -2,7 +2,9 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:ncb_frontend_v1/models/user.dart';
 import 'package:ncb_frontend_v1/screens/debit_details.dart';
+import 'package:ncb_frontend_v1/services/secure_store_service.dart';
 
 import '../../services/network_handler.dart';
 
@@ -114,6 +116,19 @@ class doubleBoxes extends StatefulWidget {
 }
 
 class _doubleBoxesState extends State<doubleBoxes> {
+  User user = User(
+      id: '',
+      firstName: '',
+      lastName: '',
+      email: '',
+      password: '',
+      cellPhone: '',
+      username: '',
+      idType: '',
+      trn: '',
+      idNumber: '',
+      ExpDate: '');
+
   var _accountList = [];
   String accType = '';
   String userID = '';
@@ -123,21 +138,44 @@ class _doubleBoxesState extends State<doubleBoxes> {
   String transaction = '';
   String error = '';
 
-  void getAccountList() async {
-    try {
-      final response = await NetworkHandler.get(endpoint: '/accounts');
-      final jsonData = jsonDecode(response)['data'];
-      print(response);
+  getUserId() async {
+    var currentUser = await SecureStore.getUser();
+    setState(() {
+      user = currentUser;
+      print(user.id);
+    });
+    getAccounts();
+  }
 
+  // void getAccountList() async {
+  //   try {
+  //     final response = await NetworkHandler.get(endpoint: '/users');
+  //     final jsonData = jsonDecode(response)['data'];
+  //     print(response);
+
+  //     setState(() {
+  //       _accountList = jsonData;
+  //     });
+  //   } catch (err) {}
+  // }
+
+  void getAccounts() async {
+    try {
+      final response = await NetworkHandler.get(endpoint: '/users/${user.id}');
+      final jsonData = jsonDecode(response)['data']['user']['accounts'];
+      print(jsonData);
       setState(() {
         _accountList = jsonData;
+        // account = _accountList![0]['_id'] as String;
       });
-    } catch (err) {}
+    } catch (err) {
+      print(err);
+    }
   }
 
   void initState() {
     super.initState();
-    getAccountList();
+    getUserId();
   }
 
   @override
@@ -211,7 +249,7 @@ class _doubleBoxesState extends State<doubleBoxes> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            'Savings',
+                            '${account['accType']['name']}',
                             style: TextStyle(fontSize: 15),
                           ),
                           Text('Account Balance')

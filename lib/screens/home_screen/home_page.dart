@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:ncb_frontend_v1/constants/colors.dart';
+import 'package:ncb_frontend_v1/models/user.dart';
 import 'package:ncb_frontend_v1/screens/login.dart';
 import 'package:ncb_frontend_v1/screens/transfer_page.dart';
-import 'package:ncb_frontend_v1/utilities/login_page_util.dart';
+import 'package:ncb_frontend_v1/services/secure_store_service.dart';
 import 'package:ncb_frontend_v1/widgets/nav.dart';
 import 'home_content.dart';
 import 'home_utilities.dart';
@@ -15,6 +16,31 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  User user = User(
+      id: '',
+      firstName: '',
+      lastName: '',
+      email: '',
+      password: '',
+      cellPhone: '',
+      username: '',
+      idType: '',
+      trn: '',
+      idNumber: '',
+      ExpDate: '');
+
+  getUserId() async {
+    var currentUser = await SecureStore.getUser();
+    setState(() {
+      user = currentUser;
+    });
+  }
+
+  void initState() {
+    super.initState();
+    getUserId();
+  }
+
   @override
   Widget build(BuildContext context) {
     var screenSize = MediaQuery.of(context).size;
@@ -33,7 +59,8 @@ class _HomePageState extends State<HomePage> {
           actions: [
             TextButton(
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context)=> LoginPage()));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => LoginPage()));
               },
               child: Text('Log Out',
                   style: TextStyle(
@@ -72,7 +99,7 @@ class _HomePageState extends State<HomePage> {
                   Padding(
                     padding: const EdgeInsets.only(right: 200, bottom: 30),
                     child: Text(
-                      'Good Morning, User',
+                      'Good Morning, ${user.firstName}',
                       style: TextStyle(color: Colors.white, fontSize: 20.7),
                     ),
                   ),
