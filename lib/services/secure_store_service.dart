@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../models/user.dart';
 
-
 class SecureStore {
   //Creates a secure persistent storage location for simple data. Something like local storage.
   static final _storage = new FlutterSecureStorage();
@@ -25,7 +24,7 @@ class SecureStore {
     String? userData = await getToken(
         "user"); //get token can return null so we need to tell dart that it may be;
     User user = User.fromJson(jsonDecode(userData!));
-    print(user.username);
+
     return user;
   }
 

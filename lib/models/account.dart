@@ -6,8 +6,8 @@ class Account {
   final String accType;
   final String accNo;
   final String currency;
-  final double balance;
-  late Transaction transactions;
+  final num balance;
+  List<Transaction> transactions = [];
 
   Account({
     required this.id,
