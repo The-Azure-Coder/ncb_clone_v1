@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:ncb_frontend_v1/screens/account_details.dart';
+import 'package:ncb_frontend_v1/models/transaction.dart';
+import 'package:ncb_frontend_v1/screens/transfer_page.dart';
 
 import '../models/account.dart';
 
@@ -32,17 +34,10 @@ class _MydebitPage extends State<debitPage> {
     ),
     balance: 0,
   );
+
   // Account accInfo;
 
-  // Transaction transactions = Transaction(
-  //     id: '',
-  //     accId: '',
-  //     openingBalance: 0,
-  //     closingBalance: "closingBalance",
-  //     type: "type",
-  //     amount: "amount",
-  //     description: "description");
-
+  List<Transaction> transactions = [];
   void getAccountList() async {
     final accountID = widget.accountDetailId;
     //Account accInfo;
@@ -50,9 +45,11 @@ class _MydebitPage extends State<debitPage> {
       final response =
           await NetworkHandler.get(endpoint: '/accounts/${accountID}');
       final jsonData = jsonDecode(response)['data']['account'];
-      print(jsonData);
+      final transactionData =
+          jsonDecode(response)['data']['account']['transactions'];
+      print(transactionData);
+      // print(jsonData);
       // print(jsonData['account']['userID']);
-      print('Before get AccountDetail');
 
       accountDetail = Account(
         id: jsonData['_id'],
@@ -62,8 +59,15 @@ class _MydebitPage extends State<debitPage> {
         currency: jsonData['currency'],
         balance: jsonData['balance'],
       );
-      // accountDetail!.transactions =
-      //     Transaction.fromJson(jsonData['transactions']);
+      print('Before get AccountDetail');
+
+      if (jsonData["transactions"] != null) {
+        List responseData = jsonData["transactions"];
+
+        transactions = responseData.map((transaction) {
+          return Transaction.fromJson(transaction);
+        }).toList();
+      }
 
       print('After get AccountDetail');
 
@@ -72,23 +76,24 @@ class _MydebitPage extends State<debitPage> {
 
       // print(accInfo.UserID.toString());
 
-      print(accountDetail);
-
       setState(() {
         // accountDetail = accInfo; //Account.fromJson(jsonData);
         accountDetail = new Account.fromJson(jsonData);
+        accountDetail?.transactions = transactions;
         // accInfo.UserID = jsonData['account']['userID'];
         // Account.fromJson(jsonData).UserID;
 
         // accInfo.accNo = Account.fromJson(jsonData).accNo;
       });
-    } catch (err) {}
-    // print(accountDetail!.id);
+    } catch (err) {
+      print(err);
+    }
   }
 
   void initState() {
     getAccountList();
     super.initState();
+    print(accountDetail?.transactions);
   }
 
   @override
@@ -248,170 +253,196 @@ class _MydebitPage extends State<debitPage> {
               ),
             ),
           )),
-      body: Container(
-        margin: EdgeInsets.only(top: 20),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            SizedBox(
-              width: screenSize.width / 1.09,
-              height: screenSize.height / 9.5,
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      ElevatedButton.icon(
-                        onPressed: () {},
-                        icon: Icon(
-                          Icons.credit_card,
-                          color: Color.fromARGB(255, 2, 41, 113),
-                        ),
-                        label: Text(
-                          'TRANSFER',
-                          style: TextStyle(color: Colors.black),
-                        ),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.white,
-                          minimumSize: Size(160.0, 50.0),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12.0)),
-                          elevation: 10,
-                        ),
-                      ),
-                      ElevatedButton.icon(
-                        onPressed: () {},
-                        icon: Icon(
-                          Icons.receipt,
-                          color: Color.fromARGB(255, 2, 41, 113),
-                        ),
-                        label: Text(
-                          'BILL PAY',
-                          style: TextStyle(color: Colors.black),
-                        ),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.white,
-                          minimumSize: Size(140.0, 50.0),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12.0)),
-                          elevation: 10,
-                        ),
-                      ),
-                    ]),
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.only(bottom: 25),
-              child: SizedBox(
-                width: screenSize.width / 1.09,
-                height: screenSize.height / 10.5,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        ElevatedButton.icon(
-                          onPressed: () {},
-                          icon: Icon(
-                            Icons.phone_iphone_outlined,
-                            color: Color.fromARGB(255, 2, 41, 113),
-                          ),
-                          label: Text(
-                            'PREPAID TOP-UP',
-                            style: TextStyle(color: Colors.black),
-                          ),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.white,
-                            minimumSize: Size(100.0, 50.0),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12.0)),
-                            elevation: 10,
-                          ),
-                        ),
-                        ElevatedButton.icon(
-                          onPressed: () {},
-                          icon: Icon(
-                            Icons.feed,
-                            color: Color.fromARGB(253, 2, 41, 113),
-                          ),
-                          label: Text(
-                            'STATEMENTS',
-                            style: TextStyle(color: Colors.black),
-                          ),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.white,
-                            minimumSize: Size(140.0, 50.0),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12.0)),
-                            elevation: 10,
-                          ),
-                        ),
-                      ]),
-                ),
-              ),
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  height: 50.0,
-                  width: screenSize.width,
-                  color: Color(0xFFFFFF),
-                  child: Center(
-                    child: SizedBox(
-                      width: screenSize.width / 1.13,
-                      child: Text('TRANSACTION (JMD)',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                          )),
-                    ),
-                  ),
-                ),
-                Container(
-                  height: 50.0,
-                  width: screenSize.width,
-                  color: Color.fromARGB(207, 222, 241, 255),
-                  child: Center(
-                    child: SizedBox(
-                      width: screenSize.width / 1.13,
-                      child: Text('Monday August 22,2022',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.blueAccent,
-                          )),
-                    ),
-                  ),
-                ),
-                Container(
-                    height: 50.0,
-                    width: screenSize.width,
-                    color: Colors.white10,
-                    child: Center(
-                      child: SizedBox(
-                        width: screenSize.width / 1.13,
+      body: ListView(
+        children: [
+          Column(
+            children: [
+              Container(
+                margin: EdgeInsets.only(top: 20),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      width: screenSize.width / 1.09,
+                      height: screenSize.height / 9.5,
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              ElevatedButton.icon(
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const TransferPage()),
+                                  );
+                                },
+                                icon: Icon(
+                                  Icons.credit_card,
+                                  color: Color.fromARGB(255, 2, 41, 113),
+                                ),
+                                label: Text(
+                                  'TRANSFER',
+                                  style: TextStyle(color: Colors.black),
+                                ),
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.white,
+                                  minimumSize: Size(160.0, 50.0),
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(12.0)),
+                                  elevation: 10,
+                                ),
+                              ),
+                              ElevatedButton.icon(
+                                onPressed: () {
+                                  // Navigator.push(
+                                  //   context,
+                                  //   MaterialPageRoute(
+                                  //       builder: (context) => const ()),
+                                  // );
+                                },
+                                icon: Icon(
+                                  Icons.receipt,
+                                  color: Color.fromARGB(255, 2, 41, 113),
+                                ),
+                                label: Text(
+                                  'BILL PAY',
+                                  style: TextStyle(color: Colors.black),
+                                ),
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.white,
+                                  minimumSize: Size(140.0, 50.0),
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(12.0)),
+                                  elevation: 10,
+                                ),
+                              ),
+                            ]),
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(bottom: 25),
+                      child: SizedBox(
+                        width: screenSize.width / 1.09,
+                        height: screenSize.height / 10.5,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                ElevatedButton.icon(
+                                  onPressed: () {},
+                                  icon: Icon(
+                                    Icons.phone_iphone_outlined,
+                                    color: Color.fromARGB(255, 2, 41, 113),
+                                  ),
+                                  label: Text(
+                                    'PREPAID TOP-UP',
+                                    style: TextStyle(color: Colors.black),
+                                  ),
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.white,
+                                    minimumSize: Size(100.0, 50.0),
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(12.0)),
+                                    elevation: 10,
+                                  ),
+                                ),
+                                ElevatedButton.icon(
+                                  onPressed: () {},
+                                  icon: Icon(
+                                    Icons.feed,
+                                    color: Color.fromARGB(253, 2, 41, 113),
+                                  ),
+                                  label: Text(
+                                    'STATEMENTS',
+                                    style: TextStyle(color: Colors.black),
+                                  ),
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.white,
+                                    minimumSize: Size(140.0, 50.0),
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(12.0)),
+                                    elevation: 10,
+                                  ),
+                                ),
+                              ]),
+                        ),
+                      ),
+                    ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          height: 50.0,
+                          width: screenSize.width,
+                          color: Color(0xFFFFFF),
+                          child: Center(
+                            child: SizedBox(
+                              width: screenSize.width / 1.13,
+                              child: Text('TRANSACTION (JMD)',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                  )),
+                            ),
+                          ),
+                        ),
+                        Column(
                           children: [
-                            Text('NCB ABM, Spanish Town, St.Catherine',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black,
-                                )),
-                            Text('-\$6790',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black,
+                            Container(
+                                padding: EdgeInsets.only(top: 20),
+                                width: screenSize.width,
+                                color: Colors.white10,
+                                child: Center(
+                                  child: Column(
+                                    children: accountDetail!.transactions
+                                        .map((transaction) {
+                                      print(transaction);
+                                      return SizedBox(
+                                        width: screenSize.width / 1.13,
+                                        child: Container(
+                                          padding: EdgeInsets.all(8),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(transaction.description,
+                                                  style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Color.fromARGB(
+                                                        255, 68, 67, 67),
+                                                  )),
+                                              Text(
+                                                  "${transaction.closingBalance}",
+                                                  style: TextStyle(
+                                                    color: Color.fromARGB(
+                                                        255, 99, 97, 97),
+                                                  )),
+                                            ],
+                                          ),
+                                        ),
+                                      );
+                                    }).toList(),
+                                  ),
                                 )),
                           ],
                         ),
-                      ),
-                    )),
-              ],
-            ),
-          ],
-        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }

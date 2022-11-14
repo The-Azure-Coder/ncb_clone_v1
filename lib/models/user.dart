@@ -6,7 +6,7 @@ class User {
   final String password;
   final String cellPhone;
   final String username;
-  final int trn;
+  final String trn;
   final String idType;
   final String idNumber;
   final String ExpDate;
@@ -34,10 +34,10 @@ class User {
       password: json['password'],
       cellPhone: json['cellPhone'],
       username: json['username'],
-      idType: json['idType'],
-      trn: json['trn'],
-      idNumber: json['idNumber'],
-      ExpDate: json['ExpDate'],
+      idType: json['idType'] ?? '',
+      trn: json['trn'] ?? '',
+      idNumber: json['idNumber'] ?? '',
+      ExpDate: json['ExpDate'] ?? '',
     );
   }
 }

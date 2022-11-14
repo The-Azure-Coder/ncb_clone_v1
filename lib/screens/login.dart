@@ -183,7 +183,7 @@ class _LoginFormState extends State<LoginForm> {
       print(responseData);
       Map data = responseData["data"];
 
-      print(responseData["data"]["accessToken"]);
+      // print(responseData["data"]["accessToken"]);
       SecureStore.storeToken("jwt-auth", data["accessToken"]);
       Map<String, dynamic> mapUser = data['user'];
       List<dynamic> mapAccounts = data['user']['accounts'];
@@ -202,7 +202,6 @@ class _LoginFormState extends State<LoginForm> {
 
   final myController = TextEditingController();
   final myController2 = TextEditingController();
-  
 
   bool _obscureText = true;
   bool _rememberMe = false;
