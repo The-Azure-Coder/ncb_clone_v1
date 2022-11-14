@@ -186,7 +186,9 @@ class _LoginFormState extends State<LoginForm> {
       print(responseData["data"]["accessToken"]);
       SecureStore.storeToken("jwt-auth", data["accessToken"]);
       Map<String, dynamic> mapUser = data['user'];
+      List<dynamic> mapAccounts = data['user']['accounts'];
       SecureStore.createUser(mapUser);
+      SecureStore.createAccount(mapAccounts);
       return true;
     } catch (error) {
       setState(() {
@@ -324,7 +326,6 @@ class _LoginFormState extends State<LoginForm> {
                                   builder: (context) {
                                     return HomePage();
                                   },
-                                  
                                 ),
                               );
                             });

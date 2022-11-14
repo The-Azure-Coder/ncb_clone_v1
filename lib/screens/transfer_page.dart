@@ -226,7 +226,7 @@ class _TransferPageState extends State<TransferPage> {
                             ]),
                         child: TextFormField(
                           decoration: InputDecoration(
-                            labelText: 'Ammount',
+                            labelText: 'Amount',
                             border: InputBorder.none,
                             contentPadding: const EdgeInsets.only(left: 15),
                           ),

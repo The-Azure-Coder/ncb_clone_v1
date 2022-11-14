@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:ncb_frontend_v1/models/account.dart';
 import '../models/user.dart';
 
 class SecureStore {
@@ -27,6 +28,21 @@ class SecureStore {
     print(user.username);
     return user;
   }
+
+  static void createAccount(List<dynamic> accountData) {
+    json.encode(accountData);
+    storeToken("account", jsonEncode(accountData));
+    print("Stored Accounts");
+  }
+
+  static Future<AccountList> getAccount() async {
+    String? userAccount = await getToken("account");
+    AccountList? account = AccountList.fromJson(jsonDecode(userAccount!));
+    print("Account Information");
+    print('accountInfo = ${account}');
+    return account;
+  }
+
 
   static logout() async {
     await _storage.deleteAll();
