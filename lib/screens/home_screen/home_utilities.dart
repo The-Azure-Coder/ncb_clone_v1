@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:ncb_frontend_v1/models/user.dart';
 import 'package:ncb_frontend_v1/screens/debit_details.dart';
+import 'package:ncb_frontend_v1/screens/login.dart';
 import 'package:ncb_frontend_v1/services/secure_store_service.dart';
 
 import '../../services/network_handler.dart';
@@ -147,17 +148,7 @@ class _doubleBoxesState extends State<doubleBoxes> {
     getAccounts();
   }
 
-  // void getAccountList() async {
-  //   try {
-  //     final response = await NetworkHandler.get(endpoint: '/users');
-  //     final jsonData = jsonDecode(response)['data'];
-  //     print(response);
-
-  //     setState(() {
-  //       _accountList = jsonData;
-  //     });
-  //   } catch (err) {}
-  // }
+ 
 
   void getAccounts() async {
     try {

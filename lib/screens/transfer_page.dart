@@ -58,7 +58,7 @@ class _TransferPageState extends State<TransferPage> {
 
   String fromAccount = "";
   String toAccount = "";
-  String amount = "";
+  num amount = 0;
   String _error = "";
 
   // @override
@@ -67,7 +67,7 @@ class _TransferPageState extends State<TransferPage> {
   // }
 
   Future<bool> moneyTransfer(
-      String fromAccount, String toAccount, String amount) async {
+      String fromAccount, String toAccount, num amount) async {
     Map TransferData = jsonDecode(await NetworkHandler.post("/transfers", {
       "fromAccount": fromAccount,
       "toAccount": toAccount,
@@ -334,7 +334,7 @@ class _TransferPageState extends State<TransferPage> {
                                   onChanged: (value) {
                                     setState(() {
                                       error = "";
-                                      amount = value;
+                                      amount = num.parse(value);
                                     });
                                   },
                                   decoration: InputDecoration(

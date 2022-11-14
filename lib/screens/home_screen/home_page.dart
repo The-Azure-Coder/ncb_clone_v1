@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ncb_frontend_v1/constants/colors.dart';
 import 'package:ncb_frontend_v1/models/user.dart';
+import 'package:ncb_frontend_v1/screens/bill_payment.dart';
 import 'package:ncb_frontend_v1/screens/login.dart';
 import 'package:ncb_frontend_v1/screens/transfer_page.dart';
 import 'package:ncb_frontend_v1/services/secure_store_service.dart';
@@ -36,6 +37,12 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  void logOut() {
+    SecureStore.logout();
+    Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (context) => LoginPage()));
+  }
+
   void initState() {
     super.initState();
     getUserId();
@@ -59,8 +66,7 @@ class _HomePageState extends State<HomePage> {
           actions: [
             TextButton(
               onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => LoginPage()));
+                logOut();
               },
               child: Text('Log Out',
                   style: TextStyle(
@@ -147,7 +153,10 @@ class _HomePageState extends State<HomePage> {
                                 width: 0.0, color: Colors.transparent))),
                         clipBehavior: Clip.none,
                         onPressed: () {
-                          print('Clicked');
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => BillPage()));
                         },
                         child: roundedContainer(
                             boxColor: Color(0xFF002A54),
