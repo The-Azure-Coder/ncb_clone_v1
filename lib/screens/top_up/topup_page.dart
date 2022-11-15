@@ -1,12 +1,16 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:ncb_frontend_v1/screens/home_screen/home_page.dart';
 import 'package:ncb_frontend_v1/screens/top_up/topup_utilities.dart';
 import 'package:ncb_frontend_v1/services/network_handler.dart';
 import 'package:ncb_frontend_v1/services/secure_store_service.dart';
-
 import '../../models/user.dart';
+import 'package:ncb_frontend_v1/models/transaction.dart';
+import 'package:ncb_frontend_v1/screens/top_up/topup_utilities.dart';
+import 'package:ncb_frontend_v1/services/secure_store_service.dart';
+
+import '../../models/account.dart';
+import '../../services/network_handler.dart';
 
 class TopUp extends StatefulWidget {
   const TopUp({super.key});
@@ -16,6 +20,7 @@ class TopUp extends StatefulWidget {
 }
 
 class _TopUpState extends State<TopUp> {
+
   User user = User(
       id: '',
       firstName: '',
@@ -113,6 +118,7 @@ class _TopUpState extends State<TopUp> {
     return Scaffold(
       appBar: TextIconBar(
           title: 'Prepaid Top-Up', preferredSize: Size.fromHeight(120.0)),
+
       body: _accounts == null
           ? Text('Loading')
           : Container(

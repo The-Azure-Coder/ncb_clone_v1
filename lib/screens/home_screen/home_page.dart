@@ -6,6 +6,7 @@ import 'package:ncb_frontend_v1/screens/login.dart';
 import 'package:ncb_frontend_v1/screens/top_up/topup_page.dart';
 import 'package:ncb_frontend_v1/screens/transfer_page.dart';
 import 'package:ncb_frontend_v1/services/secure_store_service.dart';
+import 'package:ncb_frontend_v1/utilities/login_page_util.dart';
 import 'package:ncb_frontend_v1/widgets/nav.dart';
 import 'home_content.dart';
 import 'home_utilities.dart';
@@ -18,6 +19,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
+
   User user = User(
       id: '',
       firstName: '',
