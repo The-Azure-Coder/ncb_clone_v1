@@ -81,7 +81,8 @@ class _TransferPageState extends State<TransferPage> {
     }
 
     setState(() {
-      error = TransferData["error"];
+      error = TransferData['data']["error"];
+      print(error);
     });
     return false;
   }
@@ -93,7 +94,7 @@ class _TransferPageState extends State<TransferPage> {
       // print(jsonData);
       setState(() {
         _beneficaries = jsonData;
-        benificary = _beneficaries![0]['accId'] as String;
+        toAccount = _beneficaries![0]['accId'] as String;
       });
     } catch (err) {
       print(err);
@@ -107,7 +108,7 @@ class _TransferPageState extends State<TransferPage> {
       print(jsonData);
       setState(() {
         _accounts = jsonData;
-        account = _accounts![0]['_id'] as String;
+        fromAccount = _accounts![0]['_id'] as String;
       });
     } catch (err) {
       print(err);
@@ -115,10 +116,12 @@ class _TransferPageState extends State<TransferPage> {
   }
 
   Future<bool> createBenificary(String name, String accNo) async {
-    Map benificaryStatus = jsonDecode(await NetworkHandler.post("/users/", {
+    Map benificaryStatus =
+        jsonDecode(await NetworkHandler.post("/beneficiaries/", {
       "name": name,
       "accNo": accNo,
     }));
+    // 10010007
 
     if (benificaryStatus["status"] == 'SUCCESS') {
       print("beneficiary created");
@@ -201,7 +204,7 @@ class _TransferPageState extends State<TransferPage> {
                                   child: DropdownButton(
                                     isExpanded: true,
                                     // Initial Value
-                                    value: account,
+                                    value: fromAccount,
 
                                     // Down Arrow Icon
                                     icon: const Icon(Icons.keyboard_arrow_down),
@@ -211,11 +214,14 @@ class _TransferPageState extends State<TransferPage> {
                                       return DropdownMenuItem(
                                         onTap: () {
                                           setState(() {
-                                            account = list["_id"];
-                                            print(account);
+                                            fromAccount = list["_id"];
+                                            // account = list["_id"];
+                                            print('SINGLE $fromAccount');
+                                            print(
+                                                'LIST ${_accounts!.map((e) => e['_id']).toList()}');
                                           });
                                         },
-                                        value: fromAccount = list["_id"],
+                                        value: list["_id"],
                                         child: Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
@@ -263,7 +269,7 @@ class _TransferPageState extends State<TransferPage> {
                                 child: DropdownButton(
                                   isExpanded: true,
                                   // Initial Value
-                                  value: benificary,
+                                  value: toAccount,
 
                                   // Down Arrow Icon
                                   icon: const Icon(Icons.keyboard_arrow_down),
@@ -273,11 +279,14 @@ class _TransferPageState extends State<TransferPage> {
                                     return DropdownMenuItem(
                                       onTap: () {
                                         setState(() {
-                                          benificary = list["accId"];
-                                          print(benificary);
+                                          toAccount = list["accId"];
+                                          // account = list["_id"];
+                                          print('SINGLE $toAccount');
+                                          print(
+                                              'LIST ${_beneficaries!.map((e) => e['accId']).toList()}');
                                         });
                                       },
-                                      value: toAccount = list["accId"],
+                                      value: list["accId"],
                                       child: Text(list["name"]),
                                     );
                                   }).toList(),

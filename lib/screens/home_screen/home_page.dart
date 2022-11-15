@@ -188,7 +188,8 @@ class _HomePageState extends State<HomePage> {
                                 width: 0.0, color: Colors.transparent))),
                         clipBehavior: Clip.none,
                         onPressed: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => TopUp()));
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) => TopUp()));
                         },
                         child: roundedContainer(
                             boxColor: Colors.amber,

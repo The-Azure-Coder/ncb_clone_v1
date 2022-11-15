@@ -33,22 +33,19 @@ class _BillPageState extends State<BillPage> {
   String account = '';
   String accountid = '';
   String transactionType = '';
+  // String Type = '';
   String error = "";
   String description = "";
   num amount = 0;
 
-  String type = '';
   String dropdownvalue = 'Item 1';
 
   List<dynamic> transactionCat = [
     {
-      '_id': '634d7b882e3978582611904b',
-      'name': 'Debit',
+      '_id': '634d7b882e3978582611904a',
+      'name': 'Credit',
     },
-    {
-      '_id': '634d7b782e3978582611904a',
-      'name': 'credit',
-    },
+    {'_id': '634d7b782e3978582611904b', 'name': 'Debit'},
   ];
 
   getUserId() async {
@@ -68,7 +65,7 @@ class _BillPageState extends State<BillPage> {
       print(jsonData);
       setState(() {
         _accounts = jsonData;
-        account = _accounts![0]['_id'] as String;
+        accountid = _accounts![0]['_id'] as String;
       });
     } catch (err) {
       print(err);
@@ -88,6 +85,7 @@ class _BillPageState extends State<BillPage> {
       "amount": amount,
       "description": description
     }));
+    print(transactionData);
     if (transactionData["status"] == 'SUCCESS') {
       print("beneficiary created");
       print(transactionData);
@@ -96,14 +94,18 @@ class _BillPageState extends State<BillPage> {
     }
 
     setState(() {
-      error = transactionData["error"];
+      error = transactionData['data']['error'];
+      ;
+      print(error);
     });
     return false;
   }
 
   void initState() {
     super.initState();
+
     getUserId();
+    transactionType = transactionCat[0]['_id'] as String;
   }
 
   @override
@@ -156,7 +158,7 @@ class _BillPageState extends State<BillPage> {
                                   child: DropdownButton(
                                     isExpanded: true,
                                     // Initial Value
-                                    value: account,
+                                    value: accountid,
 
                                     // Down Arrow Icon
                                     icon: const Icon(Icons.keyboard_arrow_down),
@@ -166,11 +168,14 @@ class _BillPageState extends State<BillPage> {
                                       return DropdownMenuItem(
                                         onTap: () {
                                           setState(() {
-                                            account = list["_id"];
-                                            print(account);
+                                            accountid = list["_id"];
+                                            // account = list["_id"];
+                                            print('SINGLE $accountid');
+                                            print(
+                                                'LIST ${_accounts!.map((e) => e['_id']).toList()}');
                                           });
                                         },
-                                        value: accountid = list["_id"],
+                                        value: list['_id'],
                                         child: Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
@@ -248,7 +253,7 @@ class _BillPageState extends State<BillPage> {
                                   child: DropdownButton(
                                     isExpanded: true,
                                     // Initial Value
-                                    value: transactionCat[0]['_id'],
+                                    value: transactionType,
 
                                     // Down Arrow Icon
                                     icon: const Icon(Icons.keyboard_arrow_down),
@@ -258,10 +263,13 @@ class _BillPageState extends State<BillPage> {
                                       return DropdownMenuItem(
                                         onTap: () {
                                           setState(() {
-                                            type = list["_id"];
+                                            transactionType = list["_id"];
+                                            print('SINGLE $transactionType');
+                                            print(
+                                                'LIST ${transactionCat.map((e) => e['_id']).toList()}');
                                           });
                                         },
-                                        value: transactionType = list["_id"],
+                                        value: list["_id"],
                                         child: Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
@@ -317,13 +325,14 @@ class _BillPageState extends State<BillPage> {
                         padding: MaterialStatePropertyAll(
                             EdgeInsets.only(left: 30, right: 30))),
                     onPressed: () async {
-                      if (await payBill(
-                          accountid, transactionType, amount, description)) {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: ((context) => HomePage())));
-                      }
+                      var result = await payBill(
+                          accountid, transactionType, amount, description);
+                      // if (result) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: ((context) => HomePage())));
+                      // }
                     },
                     child: Text(
                       'Make Payment',
