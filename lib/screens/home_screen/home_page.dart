@@ -3,6 +3,7 @@ import 'package:ncb_frontend_v1/constants/colors.dart';
 import 'package:ncb_frontend_v1/models/user.dart';
 import 'package:ncb_frontend_v1/screens/bill_payment.dart';
 import 'package:ncb_frontend_v1/screens/login.dart';
+import 'package:ncb_frontend_v1/screens/top_up/topup_page.dart';
 import 'package:ncb_frontend_v1/screens/transfer_page.dart';
 import 'package:ncb_frontend_v1/services/secure_store_service.dart';
 import 'package:ncb_frontend_v1/widgets/nav.dart';
@@ -184,7 +185,8 @@ class _HomePageState extends State<HomePage> {
                                 width: 0.0, color: Colors.transparent))),
                         clipBehavior: Clip.none,
                         onPressed: () {
-                          print('Clicked');
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) => TopUp()));
                         },
                         child: roundedContainer(
                             boxColor: Colors.amber,

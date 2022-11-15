@@ -33,7 +33,7 @@ class _BillPageState extends State<BillPage> {
   String account = '';
   String accountid = '';
   String transactionType = '';
-  String Type = '';
+  // String Type = '';
   String error = "";
   String description = "";
   num amount = 0;
@@ -105,7 +105,7 @@ class _BillPageState extends State<BillPage> {
     super.initState();
 
     getUserId();
-    transactionType = transactionCat[0]['_id'];
+    transactionType = transactionCat[0]['_id'] as String;
   }
 
   @override
@@ -263,10 +263,13 @@ class _BillPageState extends State<BillPage> {
                                       return DropdownMenuItem(
                                         onTap: () {
                                           setState(() {
-                                            Type = list["_id"];
+                                            transactionType = list["_id"];
+                                            print('SINGLE $transactionType');
+                                            print(
+                                                'LIST ${transactionCat.map((e) => e['_id']).toList()}');
                                           });
                                         },
-                                        value: transactionType = list["_id"],
+                                        value: list["_id"],
                                         child: Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,

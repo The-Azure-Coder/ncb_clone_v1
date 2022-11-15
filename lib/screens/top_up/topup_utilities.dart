@@ -111,7 +111,7 @@ class _IconDropDownState extends State<IconDropDown> {
                 color: Colors.white,
                 width: screenSize.width,
                 padding:
-                    const EdgeInsets.symmetric(vertical: 45, horizontal: 15),
+                    const EdgeInsets.symmetric(vertical: 35, horizontal: 15),
                 child: widget.child)
             : Container(),
       ]),
