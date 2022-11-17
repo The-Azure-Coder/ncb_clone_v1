@@ -36,87 +36,84 @@ class _LoginPageState extends State<LoginPage> {
           FocusScope.of(context).requestFocus(new FocusNode());
         },
         child: SetBckgrdImage(
-              SafeArea(
-                child: Container(
-                  child: Column(
-                    children: [
-                      Expanded(
-                        child: Stack(
-                          alignment: Alignment.bottomCenter,
-                          children: [
-                            Container(
-                              width: double.infinity,
-                              height: double.infinity,
-                            ),
-                            Positioned(
-                                bottom: 0,
-                                child: Container(
-                                  alignment: Alignment.bottomCenter,
-                                  width: screenSize.width,
-                                  height: screenSize.height * 0.2,
-                                  decoration: BoxDecoration(
-                                    color:
-                                        Colors.blue.shade800.withOpacity(0.8),
-                                    borderRadius: const BorderRadius.only(
-                                      topLeft: Radius.circular(35),
-                                      topRight: Radius.circular(35),
-                                    ),
+            SafeArea(
+              child: Container(
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: Stack(
+                        alignment: Alignment.bottomCenter,
+                        children: [
+                          Container(
+                            width: double.infinity,
+                            height: double.infinity,
+                          ),
+                          Positioned(
+                              bottom: 0,
+                              child: Container(
+                                alignment: Alignment.bottomCenter,
+                                width: screenSize.width,
+                                height: screenSize.height * 0.2,
+                                decoration: BoxDecoration(
+                                  color: Colors.blue.shade800.withOpacity(0.8),
+                                  borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(35),
+                                    topRight: Radius.circular(35),
                                   ),
-                                  child: Padding(
-                                    padding:
-                                        const EdgeInsets.fromLTRB(0, 0, 0, 15),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: <Widget>[
-                                        const Text("Activate Your Card | ",
-                                            style:
-                                                TextStyle(color: Colors.white)),
-                                        Text("Quick Send",
-                                            style: TextStyle(
-                                              color: Colors.amberAccent,
-                                            )),
-                                        const SizedBox(width: 4),
-                                        Icon(
-                                          Icons.currency_exchange,
-                                          color: Colors.amberAccent,
-                                        ),
-                                        Text(" | More...",
-                                            style:
-                                                TextStyle(color: Colors.white))
-                                      ],
-                                    ),
-                                  ),
-                                )),
-                            Positioned(
-                              bottom: screenSize.height * 0.08,
-                              child: IntrinsicHeight(
-                                child: ClipPath(
-                                  clipper: LoginClip(),
-                                  child: Container(
-                                      height: double.infinity,
-                                      width: screenSize.width * 0.95,
-                                      decoration: const BoxDecoration(
-                                        color: Colors.white,
-                                      ),
-                                      child: const Padding(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 16.0, vertical: 35.0),
-                                        child: LoginForm(),
-                                      )),
                                 ),
+                                child: Padding(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(0, 0, 0, 15),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      const Text("Activate Your Card | ",
+                                          style:
+                                              TextStyle(color: Colors.white)),
+                                      Text("Quick Send",
+                                          style: TextStyle(
+                                            color: Colors.amberAccent,
+                                          )),
+                                      const SizedBox(width: 4),
+                                      Icon(
+                                        Icons.currency_exchange,
+                                        color: Colors.amberAccent,
+                                      ),
+                                      Text(" | More...",
+                                          style: TextStyle(color: Colors.white))
+                                    ],
+                                  ),
+                                ),
+                              )),
+                          Positioned(
+                            bottom: screenSize.height * 0.08,
+                            child: IntrinsicHeight(
+                              child: ClipPath(
+                                clipper: LoginClip(),
+                                child: Container(
+                                    height: double.infinity,
+                                    width: screenSize.width * 0.95,
+                                    decoration: const BoxDecoration(
+                                      color: Colors.white,
+                                    ),
+                                    child: const Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 16.0, vertical: 35.0),
+                                      child: LoginForm(),
+                                    )),
                               ),
                             ),
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
                 ),
               ),
-              image: images.bckgroundImage),
-          ),
-      );
+            ),
+            image: images.bckgroundImage),
+      ),
+    );
   }
 }
 
@@ -199,7 +196,6 @@ class _LoginFormState extends State<LoginForm> {
                 },
                 decoration: const InputDecoration(
                   labelText: 'Username',
-                  hintText: 'rackeel',
                 ),
                 controller: myController,
                 validator: (String? val) {
@@ -269,29 +265,21 @@ class _LoginFormState extends State<LoginForm> {
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.grey.shade600,
-                      ),
+                        ),
                       onPressed: () {
                         setState(() {
                           FocusScope.of(context).requestFocus(new FocusNode());
-                          // Timer(Duration(seconds: 15), (() {
-                          //   PageLoader();
-                          //   print("objectTimer");
-                          // }));
-                          print("object");
-                          // Loader.show(context,progressIndicator:LinearProgressIndicator());
-                          
-                            Loader.show(context,
-                                progressIndicator: CircularProgressIndicator(
+                          Loader.show(context,
+                              progressIndicator: CircularProgressIndicator(
                                 color: Colors.amber,
                                 backgroundColor: Colors.blueGrey,
                               ),
-                                themeData: Theme.of(context).copyWith(
-                                    colorScheme: ColorScheme.fromSwatch()
-                                        .copyWith(secondary: Colors.red)),
-                                overlayColor: Color(0x99E8EAF6));
+                              themeData: Theme.of(context).copyWith(
+                                  colorScheme: ColorScheme.fromSwatch()
+                                      .copyWith(secondary: Colors.red)),
+                              overlayColor: Color(0x99E8EAF6));
                         });
                         Future.delayed(Duration(seconds: 4), (() async {
-                          print("object453");
                           if (await submitLogin() == true) {
                             setState(() {
                               Loader.hide();
