@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
 import 'package:ncb_frontend_v1/constants/colors.dart';
 import 'package:ncb_frontend_v1/screens/errors/credentialError.dart';
 // import 'package:ncb_frontend_v1/constants/colors.dart';
@@ -35,8 +35,7 @@ class _LoginPageState extends State<LoginPage> {
         onTap: () {
           FocusScope.of(context).requestFocus(new FocusNode());
         },
-        child: Stack(children: [
-          SetBckgrdImage(
+        child: SetBckgrdImage(
               SafeArea(
                 child: Container(
                   child: Column(
@@ -116,43 +115,8 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
               image: images.bckgroundImage),
-          loader
-              ? Container(
-                  height: double.infinity,
-                  color: Colors.black.withOpacity(0.259),
-                  child: Center(
-                    child: Container(
-                      height: 100,
-                      width: 100,
-                      decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(.9),
-                          borderRadius: BorderRadius.circular(10),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.5),
-                              spreadRadius: 3,
-                              blurRadius: 7,
-                              offset: Offset(0, 0),
-                            )
-                          ]),
-                      child: Center(
-                        child: LoadingAnimationWidget.discreteCircle(
-                          // LoadingAnimationwidget that call the
-                          color: Colors.green,
-                          secondRingColor: Colors.red,
-                          thirdRingColor:
-                              Colors.amber, // staggeredditwave animation
-                          size: 50,
-                        ),
-                      ),
-                    ),
-                  ),
-                )
-              : Container(),
-          // LoginForm.submitLogin ? Container()
-        ]),
-      ),
-    );
+          ),
+      );
   }
 }
 
@@ -215,6 +179,7 @@ class _LoginFormState extends State<LoginForm> {
   void dispose() {
     // Clean up the controller when the widget is removed from the
     // widget tree.
+    Loader.hide();
     myController.dispose();
     super.dispose();
   }
@@ -308,17 +273,28 @@ class _LoginFormState extends State<LoginForm> {
                       onPressed: () {
                         setState(() {
                           FocusScope.of(context).requestFocus(new FocusNode());
-                          PageLoader();
                           // Timer(Duration(seconds: 15), (() {
                           //   PageLoader();
                           //   print("objectTimer");
                           // }));
                           print("object");
+                          // Loader.show(context,progressIndicator:LinearProgressIndicator());
+                          
+                            Loader.show(context,
+                                progressIndicator: CircularProgressIndicator(
+                                color: Colors.amber,
+                                backgroundColor: Colors.blueGrey,
+                              ),
+                                themeData: Theme.of(context).copyWith(
+                                    colorScheme: ColorScheme.fromSwatch()
+                                        .copyWith(secondary: Colors.red)),
+                                overlayColor: Color(0x99E8EAF6));
                         });
                         Future.delayed(Duration(seconds: 4), (() async {
                           print("object453");
                           if (await submitLogin() == true) {
                             setState(() {
+                              Loader.hide();
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -330,6 +306,7 @@ class _LoginFormState extends State<LoginForm> {
                             });
                           } else {
                             setState(() {
+                              Loader.hide();
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -340,13 +317,6 @@ class _LoginFormState extends State<LoginForm> {
                           }
                         }));
                       },
-                      // if (_LoginFormState._formKey.currentState!.validate()) {
-                      //   Navigator.push(
-                      //       context,
-                      //       MaterialPageRoute(
-                      //           builder: (context) => NextPageClass()));
-                      // }
-
                       child: Text(
                         "LOGIN",
                         style: TextStyle(color: Colors.white, fontSize: 14),
