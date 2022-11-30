@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:ncb_frontend_v1/screens/account_details.dart';
 import 'package:ncb_frontend_v1/models/transaction.dart';
 import 'package:ncb_frontend_v1/screens/transfer_page.dart';
 
@@ -22,16 +21,9 @@ class _MydebitPage extends State<debitPage> {
   Account? accountDetail = Account(
     id: '',
     userID: '',
-    accType: AccountType(
-      id: '',
-      name: '',
-    ),
+    accType: '',
     accNo: '',
-    currency: AccountCurrency(
-      id: '',
-      name: '',
-      symbol: '',
-    ),
+    currency: '',
     balance: 0,
   );
 
