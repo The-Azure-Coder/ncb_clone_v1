@@ -29,21 +29,6 @@ class SecureStore {
     return user;
   }
 
-  static void createAccount(List<dynamic> accountData) {
-    json.encode(accountData);
-    storeToken("account", jsonEncode(accountData));
-    print("Stored Accounts");
-  }
-
-  static Future<AccountList> getAccount() async {
-    String? userAccount = await getToken("account");
-    AccountList? account = AccountList.fromJson(jsonDecode(userAccount!));
-    print("Account Information");
-    print('accountInfo = ${account}');
-    return account;
-  }
-
-
   static logout() async {
     await _storage.deleteAll();
   }

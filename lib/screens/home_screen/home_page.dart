@@ -20,7 +20,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
 
-
   User user = User(
       id: '',
       firstName: '',
@@ -222,3 +221,4 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
+

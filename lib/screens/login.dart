@@ -149,7 +149,7 @@ class _LoginFormState extends State<LoginForm> {
       Map<String, dynamic> mapUser = data['user'];
       List<dynamic> mapAccounts = data['user']['accounts'];
       SecureStore.createUser(mapUser);
-      SecureStore.createAccount(mapAccounts);
+
       return true;
     } catch (error) {
       setState(() {
@@ -265,7 +265,7 @@ class _LoginFormState extends State<LoginForm> {
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.grey.shade600,
-                        ),
+                      ),
                       onPressed: () {
                         setState(() {
                           FocusScope.of(context).requestFocus(new FocusNode());
@@ -330,3 +330,5 @@ class _LoginFormState extends State<LoginForm> {
         ));
   }
 }
+
+

@@ -20,23 +20,3 @@ class Benificary {
     );
   }
 }
-
-
-
-
-
-
-
-
-
-// name: {
-//         type: String,
-//         required: [ true, " Name must be specified"]
-//     },
-//     accNo: {
-//         type: String,
-//         required: [ true, " Account number must be specified"]
-//     },
-//     accId: {
-//         type: mongoose.Schema.Types.ObjectId
-//     }

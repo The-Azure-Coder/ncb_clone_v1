@@ -1,5 +1,5 @@
 class Transaction {
-  String? id;
+  final String id;
   final String accId;
   final num openingBalance;
   final num closingBalance;
@@ -16,13 +16,6 @@ class Transaction {
       required this.amount,
       required this.description});
 
-  Transaction.withoutInfo({
-    required this.accId,
-    required this.type,
-    required this.amount,
-    required this.description,
-  });
-
   factory Transaction.fromJson(Map<String, dynamic> json) {
     return Transaction(
       id: json['transactionId'],
@@ -35,3 +28,4 @@ class Transaction {
     );
   }
 }
+
