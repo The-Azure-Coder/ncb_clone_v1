@@ -163,7 +163,13 @@ class _TransferPageState extends State<TransferPage> {
         title: Text('Transfer Form'),
       ),
       body: _beneficaries == null || _accounts == null
-          ? Text('Loading')
+          ? Center(
+              child: Image.asset(
+                'assets/images/loading_gif.gif',
+                height: 80,
+                width: 80,
+              ),
+            )
           : Container(
               child: ListView(
                 shrinkWrap: true,
@@ -466,4 +472,3 @@ class _TransferPageState extends State<TransferPage> {
         });
   }
 }
-

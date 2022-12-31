@@ -62,13 +62,14 @@ class NetworkHandler {
 
   static buildUrl({String segment = "", queryParams = const {}}) {
     Uri uri = Uri(
-      scheme: "https",
-      host: "ncb-group-project.herokuapp.com",
+      scheme: "http",
+      host: "localhost:3000",
       path: "/api/v1$segment",
       // queryParameters: queryParams
     );
 
+    // http://localhost:3000/api/v1
+
     return uri;
   }
 }
-

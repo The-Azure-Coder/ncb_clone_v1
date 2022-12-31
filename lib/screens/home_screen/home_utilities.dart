@@ -41,10 +41,11 @@ class roundedContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     var screenSize = MediaQuery.of(context).size;
     return Container(
+      margin: EdgeInsets.only(top: 12),
       decoration: BoxDecoration(
           color: boxColor, borderRadius: BorderRadius.circular(10.0)),
       width: screenSize.width * 0.30,
-      height: screenSize.height * 0.160,
+      height: screenSize.height * 0.130,
       child: child,
     );
   }
@@ -67,40 +68,41 @@ class _AccordionState extends State<Accordion> {
   @override
   Widget build(BuildContext context) {
     var screenSize = MediaQuery.of(context).size;
-    return Card(
-      color: _open ? Colors.blue : Colors.grey,
-      child: Column(
-        children: [
-          TextButton(
-            onPressed: () {
-              setState(() {
-                _open = !_open;
-              });
-            },
-            child: ListTile(
-              title: Text(
-                widget.title,
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 22.0,
-                    fontWeight: FontWeight.bold),
-              ),
-              trailing: Icon(
-                _open ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down,
-                color: Colors.white,
-                size: 34.0,
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8.0),
+      child: Card(
+        color: _open ? Colors.blue : Color.fromARGB(255, 158, 164, 193),
+        child: Column(
+          children: [
+            TextButton(
+              onPressed: () {
+                setState(() {
+                  _open = !_open;
+                });
+              },
+              child: ListTile(
+                title: Text(widget.title,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20.0,
+                    )),
+                trailing: Icon(
+                  _open ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down,
+                  color: Colors.white,
+                  size: 35.0,
+                ),
               ),
             ),
-          ),
-          _open
-              ? Container(
-                  color: Colors.white,
-                  width: screenSize.width,
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
-                  child: widget.child)
-              : Container()
-        ],
+            _open
+                ? Container(
+                    color: Colors.white,
+                    width: screenSize.width,
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 15, horizontal: 15),
+                    child: widget.child)
+                : Container()
+          ],
+        ),
       ),
     );
   }
@@ -213,96 +215,106 @@ class _doubleBoxesState extends State<doubleBoxes> {
           itemCount: _accountList.length,
           itemBuilder: (context, i) {
             final account = _accountList[i];
-            return Container(
-                width: widget.screenSize.width,
-                // height: screenSize.height * .07,
-                margin: EdgeInsets.only(top: 20.0),
-                decoration: BoxDecoration(
-                    boxShadow: const [
-                      BoxShadow(
-                          color: Colors.grey,
-                          blurRadius: 5,
-                          spreadRadius: 1,
-                          offset: Offset(4, 4)),
-                    ],
-                    border:
-                        Border.all(color: Color.fromARGB(255, 180, 172, 172)),
-                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                    color: Colors.white),
-                child: Padding(
-                  padding: const EdgeInsets.all(15.0),
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            '${account['accType']['name']}',
-                            style: TextStyle(fontSize: 15),
-                          ),
-                          Text('Account Balance')
+            return
+                //  _accountList == null
+                //     ? Center(
+                //         child: Image.asset(
+                //           'assets/images/loading_gif.gif',
+                //           height: 80,
+                //           width: 80,
+                //         ),
+                //       ):
+                Container(
+                    width: widget.screenSize.width,
+                    // height: screenSize.height * .07,
+                    margin: EdgeInsets.only(top: 20.0),
+                    decoration: BoxDecoration(
+                        boxShadow: const [
+                          BoxShadow(
+                              color: Colors.grey,
+                              blurRadius: 5,
+                              spreadRadius: 1,
+                              offset: Offset(4, 4)),
                         ],
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(top: 15.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              '${account['accNo']}',
-                              style: TextStyle(
-                                  fontSize: 17, fontWeight: FontWeight.w700),
+                        border: Border.all(
+                            color: Color.fromARGB(255, 180, 172, 172)),
+                        borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                        color: Colors.white),
+                    child: Padding(
+                      padding: const EdgeInsets.all(15.0),
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                '${account['accType']['name']}',
+                                style: TextStyle(fontSize: 15),
+                              ),
+                              Text('Account Balance')
+                            ],
+                          ),
+                          Container(
+                            margin: EdgeInsets.only(top: 15.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  '${account['accNo']}',
+                                  style: TextStyle(
+                                      fontSize: 17,
+                                      fontWeight: FontWeight.w700),
+                                ),
+                                Text(
+                                  '${account['balance']}',
+                                  style: TextStyle(
+                                      fontSize: 17,
+                                      fontWeight: FontWeight.w700),
+                                )
+                              ],
                             ),
-                            Text(
-                              '${account['balance']}',
-                              style: TextStyle(
-                                  fontSize: 17, fontWeight: FontWeight.w700),
-                            )
-                          ],
-                        ),
-                      ),
-                      const Divider(
-                        height: 20,
-                        thickness: 2,
-                        indent: 0,
-                        endIndent: 0,
-                        color: Colors.black,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          SizedBox(
-                            width: 100,
-                            height: 20,
                           ),
-                          Directionality(
-                              textDirection: TextDirection.rtl,
-                              child: TextButton.icon(
-                                onPressed: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => debitPage(
-                                                accountDetailId:
-                                                    '${account['_id']}',
-                                              )));
-                                },
-                                icon: Icon(
-                                  Icons.arrow_back_outlined,
-                                  size: 24,
-                                ),
-                                label: Text(
-                                  'Account Details',
-                                  style: TextStyle(fontSize: 15),
-                                ),
-                              ))
+                          const Divider(
+                            height: 20,
+                            thickness: 2,
+                            indent: 0,
+                            endIndent: 0,
+                            color: Colors.black,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              SizedBox(
+                                width: 100,
+                                height: 20,
+                              ),
+                              Directionality(
+                                  textDirection: TextDirection.rtl,
+                                  child: TextButton.icon(
+                                    onPressed: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => debitPage(
+                                                    accountDetailId:
+                                                        '${account['_id']}',
+                                                  )));
+                                    },
+                                    icon: Icon(
+                                      Icons.arrow_back_outlined,
+                                      size: 24,
+                                    ),
+                                    label: Text(
+                                      'Account Details',
+                                      style: TextStyle(fontSize: 15),
+                                    ),
+                                  ))
+                            ],
+                          ),
                         ],
                       ),
-                    ],
-                  ),
-                ));
+                    ));
           }),
     ]);
   }
 }
-

@@ -55,10 +55,11 @@ class _LoginPageState extends State<LoginPage> {
                                 width: screenSize.width,
                                 height: screenSize.height * 0.2,
                                 decoration: BoxDecoration(
-                                  color: Colors.blue.shade800.withOpacity(0.8),
+                                  color: Color.fromARGB(255, 1, 95, 195)
+                                      .withOpacity(0.9),
                                   borderRadius: const BorderRadius.only(
-                                    topLeft: Radius.circular(35),
-                                    topRight: Radius.circular(35),
+                                    topLeft: Radius.circular(22),
+                                    topRight: Radius.circular(22),
                                   ),
                                 ),
                                 child: Padding(
@@ -92,7 +93,7 @@ class _LoginPageState extends State<LoginPage> {
                                 clipper: LoginClip(),
                                 child: Container(
                                     height: double.infinity,
-                                    width: screenSize.width * 0.95,
+                                    width: screenSize.width * 0.90,
                                     decoration: const BoxDecoration(
                                       color: Colors.white,
                                     ),
@@ -188,52 +189,79 @@ class _LoginFormState extends State<LoginForm> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: <Widget>[
-            TextFormField(
-                onChanged: (value) {
-                  setState(() {
-                    _username = value;
-                  });
-                },
-                decoration: const InputDecoration(
-                  labelText: 'Username',
-                ),
-                controller: myController,
-                validator: (String? val) {
-                  if (val == null || val.isEmpty) {
-                    return "Username field is required";
-                  }
-                  return null;
-                }),
-            const SizedBox(height: 10),
-            TextFormField(
-              onChanged: (value) {
-                setState(() {
-                  _password = value;
-                });
-              },
-              decoration: InputDecoration(
-                  hintText: 'Password',
-                  suffixIcon: IconButton(
-                    onPressed: () {
-                      _toggle();
-                    },
-                    icon: Icon(
-                      _obscureText
-                          ? Icons.visibility
-                          : Icons.visibility_off_rounded,
-                      color: Colors.grey,
+            Padding(
+              padding: EdgeInsets.only(top: 25),
+              child: SizedBox(
+                width: 300,
+                child: TextFormField(
+                    style: TextStyle(
+                      fontSize: 14.0,
                     ),
-                  )),
-              obscureText: _obscureText,
-              controller: myController2,
-              validator: (String? val) {
-                if (val == null || val.isEmpty) {
-                  return "Password field is required";
-                }
-                return null;
-              },
+                    onChanged: (value) {
+                      setState(() {
+                        _username = value;
+                      });
+                    },
+                    decoration: InputDecoration(
+                      labelText: 'Username',
+                      labelStyle: new TextStyle(
+                          color: Color.fromARGB(255, 170, 169, 169)),
+                      enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                            color: Color.fromARGB(255, 170, 169, 169)),
+                      ),
+                    ),
+                    controller: myController,
+                    validator: (String? val) {
+                      if (val == null || val.isEmpty) {
+                        return "Username field is required";
+                      }
+                      return null;
+                    }),
+              ),
             ),
             const SizedBox(height: 25),
+            SizedBox(
+              width: 300,
+              child: TextFormField(
+                style: TextStyle(
+                  fontSize: 14.0,
+                ),
+                onChanged: (value) {
+                  setState(() {
+                    _password = value;
+                  });
+                },
+                decoration: InputDecoration(
+                    labelText: 'Password',
+                    labelStyle: new TextStyle(
+                        color: Color.fromARGB(255, 170, 169, 169)),
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide:
+                          BorderSide(color: Color.fromARGB(255, 170, 169, 169)),
+                    ),
+                    suffixIcon: IconButton(
+                      onPressed: () {
+                        _toggle();
+                      },
+                      icon: Icon(
+                        _obscureText
+                            ? Icons.visibility
+                            : Icons.visibility_off_rounded,
+                        color: Colors.grey,
+                      ),
+                    )),
+                obscureText: _obscureText,
+                controller: myController2,
+                validator: (String? val) {
+                  if (val == null || val.isEmpty) {
+                    return "Password field is required";
+                  }
+                  return null;
+                },
+              ),
+            ),
+            const SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               mainAxisSize: MainAxisSize.max,
@@ -248,37 +276,52 @@ class _LoginFormState extends State<LoginForm> {
                             _rememberMe = value!;
                           });
                         }),
-                    Text('Remember Me')
+                    Text(
+                      'Remember Me',
+                      style: TextStyle(
+                          fontSize: 13, color: Color.fromARGB(255, 2, 85, 187)),
+                    )
                   ],
                 ),
-                TextButton(onPressed: () {}, child: Text('Forgot Password?'))
+                TextButton(
+                    onPressed: () {},
+                    child: Text(
+                      'Forgot Password?',
+                      style: TextStyle(
+                          decoration: TextDecoration.underline,
+                          fontSize: 13,
+                          color: Color.fromARGB(255, 2, 85, 187)),
+                    ))
               ],
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 5),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Flexible(
                   child: SizedBox(
-                    width: 330,
+                    width: 340,
                     height: 39,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.grey.shade600,
-                      ),
+                          shape: StadiumBorder(),
+                          elevation: 0.0,
+                          backgroundColor: Color.fromARGB(255, 247, 210, 26)),
                       onPressed: () {
-                        setState(() {
-                          FocusScope.of(context).requestFocus(new FocusNode());
-                          Loader.show(context,
-                              progressIndicator: CircularProgressIndicator(
-                                color: Colors.amber,
-                                backgroundColor: Colors.blueGrey,
-                              ),
-                              themeData: Theme.of(context).copyWith(
-                                  colorScheme: ColorScheme.fromSwatch()
-                                      .copyWith(secondary: Colors.red)),
-                              overlayColor: Color(0x99E8EAF6));
-                        });
+                        if (_formKey.currentState!.validate())
+                          setState(() {
+                            FocusScope.of(context)
+                                .requestFocus(new FocusNode());
+                            Loader.show(context,
+                                progressIndicator: CircularProgressIndicator(
+                                  color: Colors.amber,
+                                  backgroundColor: Colors.blueGrey,
+                                ),
+                                themeData: Theme.of(context).copyWith(
+                                    colorScheme: ColorScheme.fromSwatch()
+                                        .copyWith(secondary: Colors.red)),
+                                overlayColor: Color(0x99E8EAF6));
+                          });
                         Future.delayed(Duration(seconds: 4), (() async {
                           if (await submitLogin() == true) {
                             setState(() {
@@ -307,7 +350,7 @@ class _LoginFormState extends State<LoginForm> {
                       },
                       child: Text(
                         "LOGIN",
-                        style: TextStyle(color: Colors.white, fontSize: 14),
+                        style: TextStyle(color: Colors.black, fontSize: 11),
                       ),
                     ),
                   ),
@@ -330,5 +373,3 @@ class _LoginFormState extends State<LoginForm> {
         ));
   }
 }
-
-

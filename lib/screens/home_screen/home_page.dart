@@ -19,7 +19,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
   User user = User(
       id: '',
       firstName: '',
@@ -58,7 +57,7 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: Colors.white,
       drawer: MyDrawer(),
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(screenSize.height * .42),
+        preferredSize: Size.fromHeight(screenSize.height * .39),
         child: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0.0,
@@ -136,15 +135,17 @@ class _HomePageState extends State<HomePage> {
                                 children: [
                                   Arch(
                                       child: Icon(
-                                    Icons.payments,
-                                    size: 37,
+                                    Icons.payments_outlined,
+                                    color: Color.fromARGB(255, 2, 50, 162),
+                                    size: 30,
                                   )),
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Text('Transfer',
                                         style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 20.0)),
+                                            color:
+                                                Color.fromARGB(255, 2, 37, 121),
+                                            fontSize: 18.0)),
                                   ),
                                 ])),
                       ),
@@ -167,14 +168,18 @@ class _HomePageState extends State<HomePage> {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   Arch(
-                                      child: Icon(Icons
-                                          .transfer_within_a_station_outlined)),
+                                    child: Icon(
+                                      Icons.recent_actors_outlined,
+                                      size: 30,
+                                      color: Color.fromARGB(255, 2, 50, 162),
+                                    ),
+                                  ),
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Text(
                                       'Bill Pay',
                                       style: TextStyle(
-                                          color: Colors.white, fontSize: 20),
+                                          color: Colors.white, fontSize: 18),
                                     ),
                                   ),
                                 ])),
@@ -191,25 +196,26 @@ class _HomePageState extends State<HomePage> {
                               MaterialPageRoute(builder: (context) => TopUp()));
                         },
                         child: roundedContainer(
-                            boxColor: Colors.amber,
-                            child: Expanded(
-                              child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Arch(
-                                        child: Icon(Icons
-                                            .transfer_within_a_station_outlined)),
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Text(
-                                        'Top Up',
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 20.0),
-                                      ),
-                                    ),
-                                  ]),
-                            )),
+                          boxColor: Colors.amber,
+                          child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Arch(
+                                    child: Icon(
+                                  Icons.mobile_screen_share_outlined,
+                                  color: Color.fromARGB(255, 2, 50, 162),
+                                  size: 30,
+                                )),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    'Top Up',
+                                    style: TextStyle(
+                                        color: Colors.black, fontSize: 18.0),
+                                  ),
+                                ),
+                              ]),
+                        ),
                       ),
                     ],
                   ),
@@ -221,4 +227,3 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
-
