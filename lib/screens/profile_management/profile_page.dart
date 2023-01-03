@@ -35,23 +35,25 @@ class _ProfileState extends State<Profile> {
                           children: [
                             Image.asset(
                               images.logo,
-                              width: 60,
-                              height: 60,
+                              width: 50,
+                              height: 50,
                             ),
                             Padding(
                               padding: const EdgeInsets.fromLTRB(8, 0, 0, 0),
                               child: Text(
                                 'Online Profile',
-                                style: TextStyle(fontSize: 24),
+                                style: TextStyle(
+                                    fontSize: 20,
+                                    color: Color.fromARGB(255, 66, 66, 66)),
                               ),
                             )
                           ],
                         ),
                       ),
                       Divider(
-                        height: 8,
-                        thickness: 0.5,
-                        color: Colors.black,
+                        height: 2,
+                        thickness: 0.2,
+                        color: Color.fromARGB(255, 80, 80, 80),
                         indent: 10,
                         endIndent: 20,
                       ),
@@ -63,15 +65,30 @@ class _ProfileState extends State<Profile> {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text('Name:'),
-                                Text('Tyrone Wilson'),
+                                Text(
+                                  'Name:',
+                                  style: TextStyle(
+                                      color: Color.fromARGB(255, 84, 83, 83)),
+                                ),
+                                Text('Tyrone Wilson',
+                                    style: TextStyle(
+                                        color:
+                                            Color.fromARGB(255, 84, 83, 83))),
                               ],
                             ),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text('TRN:'),
-                                Text('132675325'),
+                                Text(
+                                  'TRN:',
+                                  style: TextStyle(
+                                      color: Color.fromARGB(255, 84, 83, 83)),
+                                ),
+                                Text(
+                                  '132675325',
+                                  style: TextStyle(
+                                      color: Color.fromARGB(255, 84, 83, 83)),
+                                )
                               ],
                             )
                           ],
@@ -85,15 +102,30 @@ class _ProfileState extends State<Profile> {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text('Date of Birth:'),
-                                Text('28-12-2001'),
+                                Text('Date of Birth:',
+                                    style: TextStyle(
+                                        color:
+                                            Color.fromARGB(255, 84, 83, 83))),
+                                Text('28-12-2001',
+                                    style: TextStyle(
+                                        color:
+                                            Color.fromARGB(255, 84, 83, 83))),
                               ],
                             ),
                             Padding(
                               padding: const EdgeInsets.fromLTRB(0, 0, 20, 0),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [Text('Gender:'), Text('M')],
+                                children: [
+                                  Text('Gender:',
+                                      style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 84, 83, 83))),
+                                  Text('M',
+                                      style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 84, 83, 83)))
+                                ],
                               ),
                             )
                           ],
@@ -107,8 +139,13 @@ class _ProfileState extends State<Profile> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text('Mailing Address:'),
-                                Text('123 Riverdale')
+                                Text('Mailing Address:',
+                                    style: TextStyle(
+                                        color:
+                                            Color.fromARGB(255, 84, 83, 83))),
+                                Text('123 Riverdale',
+                                    style: TextStyle(
+                                        color: Color.fromARGB(255, 84, 83, 83)))
                               ],
                             ),
                           ),
@@ -140,7 +177,7 @@ class _ProfileState extends State<Profile> {
                 children: [
                   Text(
                     'Please Select a field you want to edit',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+                    style: TextStyle(fontSize: 15),
                   ),
                   SizedBox(
                     width: 20,
@@ -149,33 +186,87 @@ class _ProfileState extends State<Profile> {
                   Form(
                       child: Column(
                     children: [
-                      TextFormField(
-                        textCapitalization: TextCapitalization.words,
-                        initialValue: "JRACKFINN@GMAIL.COM",
-                        decoration: InputDecoration(
-                            border: OutlineInputBorder(),
-                            labelStyle: TextStyle(
-                                fontSize: 17.0,
-                                color: Colors.black,
-                                fontWeight: FontWeight.w500)),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'EMAIL ADDRESS',
+                            style: TextStyle(fontWeight: FontWeight.w400),
+                          ),
+                          SizedBox(
+                            height: 9,
+                          ),
+                          Container(
+                            padding: EdgeInsets.all(5),
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(8),
+                                boxShadow: [
+                                  BoxShadow(
+                                      blurRadius: 1.0,
+                                      color: Color.fromARGB(255, 233, 233, 233),
+                                      spreadRadius: 2,
+                                      offset: Offset(1, 5)),
+                                ]),
+                            child: TextFormField(
+                              textCapitalization: TextCapitalization.words,
+                              initialValue: "JRACKFINN@GMAIL.COM",
+                              decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  labelStyle: TextStyle(
+                                      fontSize: 15.0,
+                                      color: Colors.grey,
+                                      fontWeight: FontWeight.w500)),
+                            ),
+                          ),
+                        ],
                       ),
                       SizedBox(
                         width: 20,
-                        height: 50,
+                        height: 35,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Expanded(
-                            child: TextFormField(
-                              textCapitalization: TextCapitalization.words,
-                              initialValue: "123456789",
-                              decoration: InputDecoration(
-                                  border: OutlineInputBorder(),
-                                  labelStyle: TextStyle(
-                                      fontSize: 17.0,
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.w500)),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Phone Number',
+                                  style: TextStyle(fontWeight: FontWeight.w400),
+                                ),
+                                SizedBox(
+                                  height: 9,
+                                ),
+                                Container(
+                                  padding: EdgeInsets.all(5),
+                                  decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(8),
+                                      boxShadow: [
+                                        BoxShadow(
+                                            blurRadius: 1.0,
+                                            color: Color.fromARGB(
+                                                255, 233, 233, 233),
+                                            spreadRadius: 2,
+                                            offset: Offset(1, 5)),
+                                      ]),
+                                  child: TextFormField(
+                                    textCapitalization:
+                                        TextCapitalization.words,
+                                    initialValue: "123456789",
+                                    decoration: InputDecoration(
+                                        border: InputBorder.none,
+                                        labelStyle: TextStyle(
+                                            fontSize: 15.0,
+                                            color: Colors.grey,
+                                            fontWeight: FontWeight.w500)),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                           SizedBox(
@@ -183,16 +274,45 @@ class _ProfileState extends State<Profile> {
                             height: 30,
                           ),
                           Expanded(
-                            child: TextFormField(
-                              textCapitalization: TextCapitalization.words,
-                              // initialValue: "JRACKFINN@GMAIL.COM",
-                              decoration: InputDecoration(
-                                  border: OutlineInputBorder(),
-                                  labelText: 'Enter Home Number',
-                                  labelStyle: TextStyle(
-                                      fontSize: 17.0,
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.w500)),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Home address',
+                                  style: TextStyle(fontWeight: FontWeight.w400),
+                                ),
+                                SizedBox(
+                                  height: 9,
+                                ),
+                                Container(
+                                  padding: EdgeInsets.all(5),
+                                  decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(8),
+                                      boxShadow: [
+                                        BoxShadow(
+                                            blurRadius: 1.0,
+                                            color: Color.fromARGB(
+                                                255, 233, 233, 233),
+                                            spreadRadius: 2,
+                                            offset: Offset(1, 5)),
+                                      ]),
+                                  child: TextFormField(
+                                    textCapitalization:
+                                        TextCapitalization.words,
+                                    // initialValue: "JRACKFINN@GMAIL.COM",
+                                    decoration: InputDecoration(
+                                        border: InputBorder.none,
+                                        labelText: 'Enter Home Address',
+                                        labelStyle: TextStyle(
+                                          fontSize: 15.0,
+                                          color: Color.fromARGB(
+                                              255, 128, 128, 128),
+                                        )),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ],
@@ -210,12 +330,13 @@ class _ProfileState extends State<Profile> {
           Center(
             child: ElevatedButton(
               style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Colors.amber),
+                  backgroundColor: MaterialStateProperty.all(
+                      Color.fromARGB(255, 246, 197, 49)),
                   padding: MaterialStatePropertyAll(
                       EdgeInsets.only(left: 30, right: 30))),
               onPressed: () {},
               child: Text(
-                'Submit',
+                'Update',
                 style: TextStyle(fontSize: 20, color: Colors.black),
               ),
             ),
